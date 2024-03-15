@@ -1,15 +1,30 @@
 # [world_tools.py]
 
 import os
+import json
 
 
 class world_tools:
+    def reconocer_objetos():
+        try:
+            with open("./data/characters.json", 'r') as archivo_json:
+                return json.load(archivo_json)
+        except json.JSONDecodeError:
+            print(
+                "Error: El archivo characters.json no se puede convertir a un diccionario.")
+            return {}
+
     def generar_mundo(nombre_archivo):
+        # Obtener la ruta completa del archivo .txt en la carpeta data
+        ruta_archivo = './worlds/' + nombre_archivo
+
         matriz = []
-        with open(nombre_archivo, 'r') as archivo:
+
+        with open(ruta_archivo, 'r') as archivo:
             for linea in archivo:
                 fila = [str(x) for x in linea.strip().split(' ')]
                 matriz.append(fila)
+
         return matriz
 
     def determinar_posicion(matriz, numero):

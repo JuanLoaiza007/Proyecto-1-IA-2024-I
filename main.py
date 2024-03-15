@@ -6,21 +6,13 @@
 # a traves de los sensores
 import time
 # from agente_reflejo_simple import agente_reflejo_simple as agente
-from agente_reflejo_simple import agente_reflejo_simple as agente
-from world_tools import world_tools
+from models.agents.agente_reflejo_simple import agente_reflejo_simple as agente
+from models.world_tools import world_tools
 
 # Mapa
-nombre_mundo = "prueba1.txt"
+nombre_mundo = "world.txt"
 
-# Representacion de los objetos en el ambiente como caracteres de una matriz
-# El .txt de entrada usará estos caracteres
-env_objects_dic = {
-    'vacio': '0',
-    'pared': '1',
-    'caracter_nave': '3',
-    'caracter_agente': '2',
-    'caracter_meta': '5',
-}
+env_objects_dic = world_tools.reconocer_objetos()
 
 # Variables de juego
 juego_activo = True

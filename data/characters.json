@@ -1,0 +1,7 @@
+{
+  "vacio": "0",
+  "pared": "1",
+  "caracter_agente": "2",
+  "caracter_nave": "3",
+  "caracter_meta": "5"
+}

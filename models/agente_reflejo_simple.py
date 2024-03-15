@@ -1,4 +1,4 @@
-from models.agents.agente import agente
+from models.agente import agente
 
 
 class agente_reflejo_simple(agente):

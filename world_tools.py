@@ -8,7 +8,7 @@ class world_tools:
         matriz = []
         with open(nombre_archivo, 'r') as archivo:
             for linea in archivo:
-                fila = [str(x) for x in linea.strip().split(',')]
+                fila = [str(x) for x in linea.strip().split(' ')]
                 matriz.append(fila)
         return matriz
 

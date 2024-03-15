@@ -10,15 +10,16 @@ from agente_reflejo_simple import agente_reflejo_simple as agente
 from world_tools import world_tools
 
 # Mapa
-nombre_mundo = "world.txt"
+nombre_mundo = "prueba1.txt"
 
 # Representacion de los objetos en el ambiente como caracteres de una matriz
 # El .txt de entrada usará estos caracteres
 env_objects_dic = {
     'vacio': '0',
-    'pared': 'P',
-    'caracter_agente': 'A',
-    'caracter_meta': 'M',
+    'pared': '1',
+    'caracter_nave': '3',
+    'caracter_agente': '2',
+    'caracter_meta': '5',
 }
 
 # Variables de juego

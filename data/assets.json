@@ -1,0 +1,8 @@
+{
+  "vacio": "./views/assets/vacio.png",
+  "pared": "./views/assets/pared.png",
+  "agente": "./views/assets/mando.png",
+  "nave": "./views/assets/nave.png",
+  "enemigo": "./views/assets/enemigo.png",
+  "meta": "./views/assets/grogu.png"
+}

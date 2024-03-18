@@ -1,7 +1,8 @@
 {
   "vacio": "0",
   "pared": "1",
-  "caracter_agente": "2",
-  "caracter_nave": "3",
-  "caracter_meta": "5"
+  "agente": "2",
+  "nave": "3",
+  "enemigo": "4",
+  "meta": "5"
 }

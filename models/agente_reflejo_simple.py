@@ -46,11 +46,37 @@ class agente_reflejo_simple(agente):
         accion = self.determinar_accion(percepciones)
 
         if accion == 'alegrarse':
-            print("Lo logré :D")
+            if self.debug:
+                print("agente_reflejo_simply.py: Estoy en la meta, no me movere")
             return False
         if accion == 'esperar':
-            print("Ayuda :(")
+            if self.debug:
+                print("agente_reflejo_simply.py: No encuentro que hacer, no me movere")
             return False
         else:
+            if self.debug:
+                print("agente_reflejo_simply.py: Me moveré a ", accion)
             self.set_coordenadas(getattr(self, accion)())
+
             return True
+
+    def iniciar_viaje(self):
+
+        en_viaje = True
+        resultado = "Estoy perdido"
+
+        while (en_viaje):
+            en_viaje = self.tomar_decision()
+
+            for elemento in self.pasos[:-1]:
+                if elemento == self.coordenadas:
+                    if self.debug:
+                        print("agente_reflejo_simply.py: Pensé ir a ",
+                              self.coordenadas, " pero  ya estuve en ", elemento)
+                    resultado = "Ya paśe por aqui, algo anda mal :("
+                    en_viaje = False
+
+        if self.meta_alcanzada():
+            resultado = "Encontré a grogu"
+
+        return self.pasos, resultado

@@ -1,6 +1,7 @@
 # [world_tools.py]
 
 import json
+from PyQt5.QtCore import QTimer, QEventLoop
 
 
 class world_tools:
@@ -22,10 +23,7 @@ class world_tools:
                 "Error: El archivo characters.json no se puede convertir a un diccionario.")
             return {}
 
-    def generar_mundo(nombre_archivo):
-        # Obtener la ruta completa del archivo .txt en la carpeta data
-        ruta_archivo = './worlds/' + nombre_archivo
-
+    def generar_mundo(ruta_archivo):
         matriz = []
 
         with open(ruta_archivo, 'r') as archivo:
@@ -53,3 +51,15 @@ class world_tools:
                     fila_impresa += str(elemento) + "\t"
             print(fila_impresa)
         print()
+
+
+class Temporizador:
+    @staticmethod
+    def iniciar(tiempo_segundos):
+        loop = QEventLoop()
+        timer = QTimer()
+        timer.setSingleShot(True)
+        timer.timeout.connect(loop.quit)
+        tiempo_ms = tiempo_segundos * 1000
+        timer.start(tiempo_ms)
+        loop.exec_()

@@ -6,10 +6,15 @@ class agente:
         self.coordenadas_meta = None
         self.ambiente = None
         self.env_objects_dic = None
+        self.pasos = []
+        self.debug = False
 
     # Coordenadas del agente
     def set_coordenadas(self, coordenadas):
+        if self.debug:
+            print("agente.py: Coordenadas actualizadas a ", coordenadas)
         self.coordenadas = coordenadas
+        self.pasos.append(self.coordenadas)
 
     def get_coordenadas(self):
         return self.coordenadas

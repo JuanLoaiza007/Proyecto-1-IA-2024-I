@@ -1,15 +1,17 @@
 import os
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer, QEventLoop
 from PyQt5.QtGui import QPixmap, QIcon
 from models.agente_reflejo_simple import agente_reflejo_simple as agente
 from models.world_tools import world_tools
+from models.world_tools import Temporizador
 from views.sm_dialog_clean import Ui_Dialog as sm_dialog_clean
+from models.file_selector import File_selector
 
 
 class modelo_juego:
     def __init__(self):
         self.tabla_juego = None
+        self.debug = False
 
         self.assets_dic = world_tools.reconocer_assets()
         self.env_objects_dic = world_tools.reconocer_objetos()
@@ -47,64 +49,53 @@ class modelo_juego:
                     elif elemento == self.env_objects_dic['nave']:
                         pixmap = QPixmap(self.nave)
                     else:
-                        print(
-                            "modelo_juego.py: actualizar_tabla ha omitido cargar el elemento ", elemento)
+                        if self.debug:
+                            print(
+                                "modelo_juego.py: actualizar_tabla ha omitido cargar el elemento ", elemento)
 
                 icon = QIcon(pixmap)
                 item.setIcon(icon)
                 self.tabla_juego.setItem(i, j, item)
 
-    def temporizador(self, tiempo_segundos):
-        loop = QEventLoop()
-        timer = QTimer()
-        timer.setSingleShot(True)
-        timer.timeout.connect(lambda: loop.quit())
-        tiempo_ms = tiempo_segundos * 1000
-        timer.start(tiempo_ms)
-        loop.exec_()
-
-    def exito(self):
+    def dialog(self, text):
         new_dialog = QtWidgets.QDialog()
         new_ui = sm_dialog_clean()
         new_ui.setupUi(new_dialog)
+        new_ui.lbl_main_text.setText(text)
         new_dialog.setModal(True)
         new_dialog.show()
-
-        saludo = "Encontré a Grogu!"
-        new_ui.lbl_main_text.setText(saludo)
-
         new_dialog.exec()
 
     def iniciar_juego(self):
-        # Mapa
-        nombre_mundo = "prueba1.txt"
-        juego_activo = True
+        # Cargar archivo de mundo
+        file_selector = File_selector()
+        archivo = file_selector.select()
 
-        ambiente = world_tools.generar_mundo(nombre_mundo)
+        # Generar mundo
+        ambiente = world_tools.generar_mundo(archivo)
 
+        # Crear agente
         mando = agente()
         mando.set_coordenadas(world_tools.determinar_posicion(
             ambiente, self.env_objects_dic['agente']))
         mando.set_ambiente(ambiente, self.env_objects_dic)
         mando.set_meta(world_tools.determinar_posicion(
             ambiente, self.env_objects_dic['meta']))
-
+        # Limpiar ambiente
         ambiente[mando.coordenadas[0]][mando.coordenadas[1]] = 0
 
+        # Mostrar resultado en pantalla
         self.actualizar_tabla(ambiente,
                               mando.get_coordenadas(), mando.get_meta())
 
-        self.temporizador(2)
+        # Iniciar viaje del agente o el arbol
+        # camino: El camino que tomó el agente o el arbol
+        # resultado: Un mensaje para decir que pasó
+        camino, resultado = mando.iniciar_viaje()
 
-        while juego_activo:
-
-            juego_activo = not (mando.meta_alcanzada())
-
+        # Animacion del camino
+        for paso in camino:
+            Temporizador.iniciar(2)
             self.actualizar_tabla(
-                ambiente, mando.get_coordenadas(), mando.get_meta())
-
-            juego_activo = mando.tomar_decision()
-
-            self.temporizador(1.3)
-
-        self.exito()
+                ambiente, paso, mando.get_meta())
+        self.dialog(resultado)

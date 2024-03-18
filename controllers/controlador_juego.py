@@ -6,6 +6,7 @@ from PyQt5.QtGui import QStandardItemModel, QPixmap
 from views.vista_juego import Ui_MainWindow
 from models.modelo_juego import modelo_juego
 from views.sm_dialog_clean import Ui_Dialog as sm_dialog_clean
+from models.world_tools import Temporizador
 
 
 class controlador_juego:
@@ -45,6 +46,7 @@ class controlador_juego:
     def mostrar(self, main_window):
         self.cargar(main_window)
         self.MainWindow.show()
+        Temporizador.iniciar(0.1)
         self.modelo.iniciar_juego()
 
     def block_focus(self, window):

@@ -6,7 +6,7 @@ from PyQt5.QtGui import QStandardItemModel, QPixmap
 from views.vista_juego import Ui_MainWindow
 from models.modelo_juego import modelo_juego
 from views.sm_dialog_clean import Ui_Dialog as sm_dialog_clean
-from models.world_tools import Temporizador
+from models.tools.temporizador import Temporizador
 
 
 class controlador_juego:

@@ -2,7 +2,7 @@
 
 import time
 from models.agente import agente
-from models.world_tools import world_tools
+from models.tools.world_tools import world_tools
 from models.nodo import Nodo
 
 # Mapa

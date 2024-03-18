@@ -1,6 +1,5 @@
 # [world_tools.py]
 
-import os
 import json
 
 
@@ -8,6 +7,15 @@ class world_tools:
     def reconocer_objetos():
         try:
             with open("./data/characters.json", 'r') as archivo_json:
+                return json.load(archivo_json)
+        except json.JSONDecodeError:
+            print(
+                "Error: El archivo characters.json no se puede convertir a un diccionario.")
+            return {}
+
+    def reconocer_assets():
+        try:
+            with open("./data/assets.json", 'r') as archivo_json:
                 return json.load(archivo_json)
         except json.JSONDecodeError:
             print(
@@ -32,10 +40,8 @@ class world_tools:
             for x, elemento in enumerate(fila):
                 if elemento == numero:
                     return [y, x]
-        return None
 
     def imprimir_juego(env_objects_dic, ambiente, coordenadas_agente, coordenadas_meta):
-        os.system('clear')
         for i, fila in enumerate(ambiente):
             fila_impresa = ""
             for j, elemento in enumerate(fila):

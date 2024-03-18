@@ -1,6 +1,12 @@
 # [agente.py]
 
 class agente:
+    def __init__(self):
+        self.coordenadas = None
+        self.coordenadas_meta = None
+        self.ambiente = None
+        self.env_objects_dic = None
+
     # Coordenadas del agente
     def set_coordenadas(self, coordenadas):
         self.coordenadas = coordenadas
@@ -13,7 +19,7 @@ class agente:
         self.coordenadas_meta = coordenadas_meta
 
     def get_meta(self):
-        self.coordenadas_meta
+        return self.coordenadas_meta
 
     # Copia ambiente
     def set_ambiente(self, ambiente, env_objects_dic):
@@ -42,7 +48,7 @@ class agente:
         columnas = len(self.ambiente[0]) if self.ambiente else 0
 
         if fila >= 0 and fila < filas and columna >= 0 and columna < columnas:
-            if self.ambiente[fila][columna] == self.env_objects_dic['vacio'] or self.ambiente[fila][columna] == self.env_objects_dic['caracter_meta']:
+            if self.ambiente[fila][columna] == self.env_objects_dic['vacio'] or self.ambiente[fila][columna] == self.env_objects_dic['meta']:
                 return True
         return False
 

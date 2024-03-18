@@ -44,6 +44,8 @@ class modelo_juego:
                         pixmap = QPixmap(self.pared)
                     elif elemento == self.env_objects_dic['enemigo']:
                         pixmap = QPixmap(self.enemigo)
+                    elif elemento == self.env_objects_dic['nave']:
+                        pixmap = QPixmap(self.nave)
                     else:
                         print(
                             "modelo_juego.py: actualizar_tabla ha omitido cargar el elemento ", elemento)
@@ -75,7 +77,7 @@ class modelo_juego:
 
     def iniciar_juego(self):
         # Mapa
-        nombre_mundo = "world.txt"
+        nombre_mundo = "prueba1.txt"
         juego_activo = True
 
         ambiente = world_tools.generar_mundo(nombre_mundo)

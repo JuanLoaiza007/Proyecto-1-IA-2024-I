@@ -10,11 +10,20 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>800</width>
     <height>600</height>
    </size>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -438,16 +447,9 @@ QLabel {
   color: #141619;
   background-color: #d3d3d4;
   border-color: #bcbebf;
-}
-</string>
-  </property>
-  <property name="class" stdset="0">
-   <string/>
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
    <property name="class" stdset="0">
     <string>background-white</string>
    </property>
@@ -472,16 +474,53 @@ QLabel {
       <property name="minimumSize">
        <size>
         <width>800</width>
-        <height>530</height>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>80</height>
        </size>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="lbl_titulo">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="class" stdset="0">
+          <string>h1 color-primary</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_2">
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>340</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -498,11 +537,17 @@ QLabel {
         <number>0</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame_5">
+        <widget class="QFrame" name="frame_4">
          <property name="minimumSize">
           <size>
-           <width>576</width>
-           <height>528</height>
+           <width>100</width>
+           <height>400</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="frameShape">
@@ -511,10 +556,26 @@ QLabel {
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="spacing">
-           <number>10</number>
-          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_5">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>400</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="class" stdset="0">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -527,12 +588,21 @@ QLabel {
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QFrame" name="frame_7">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0" rowspan="3">
+           <widget class="QFrame" name="frame_9">
             <property name="minimumSize">
              <size>
-              <width>576</width>
-              <height>156</height>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="frameShape">
@@ -558,45 +628,27 @@ QLabel {
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="frame_11">
+              <widget class="QFrame" name="frame_15">
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QGridLayout" name="gridLayout_2">
-                <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                 <widget class="QLabel" name="lbl_titulo">
-                  <property name="text">
-                   <string>Mi Aplicacion</string>
-                  </property>
-                  <property name="class" stdset="0">
-                   <string>h1 color-primary</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
               </widget>
              </item>
             </layout>
            </widget>
           </item>
-          <item>
-           <widget class="QFrame" name="frame_8">
-            <property name="minimumSize">
-             <size>
-              <width>520</width>
-              <height>232</height>
-             </size>
-            </property>
+          <item row="1" column="1">
+           <widget class="QFrame" name="frame_11">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -613,211 +665,134 @@ QLabel {
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="frame_14">
+              <widget class="QTableWidget" name="table_mapa">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>700</width>
-                 <height>16777215</height>
+                 <width>850</width>
+                 <height>790</height>
+                </size>
+               </property>
+               <property name="sizeIncrement">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
                 </size>
                </property>
                <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
+                <enum>QFrame::Plain</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>40</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>40</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QFrame" name="frame_10">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_5">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QFrame" name="frame_16">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>110</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>110</height>
-                      </size>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_6">
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QLabel" name="label_2">
-                        <property name="minimumSize">
-                         <size>
-                          <width>379</width>
-                          <height>27</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>379</width>
-                          <height>27</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>Nombre:</string>
-                        </property>
-                        <property name="class" stdset="0">
-                         <string>h5</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QTextEdit" name="txta_nombre">
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>600</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                        <property name="class" stdset="0">
-                         <string>nb b-sb-2</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QFrame" name="frame_15">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>109</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777214</height>
-                      </size>
-                     </property>
-                     <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QFrame" name="frame_12">
-                  <property name="maximumSize">
-                   <size>
-                    <width>160</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_4">
-                   <property name="topMargin">
-                    <number>56</number>
-                   </property>
-                   <item>
-                    <widget class="QPushButton" name="btn_saludar">
-                     <property name="text">
-                      <string>Saludame</string>
-                     </property>
-                     <property name="class" stdset="0">
-                      <string>btn-primary</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QFrame" name="frame_13">
-                     <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+               </property>
+               <property name="editTriggers">
+                <set>QAbstractItemView::NoEditTriggers</set>
+               </property>
+               <property name="tabKeyNavigation">
+                <bool>false</bool>
+               </property>
+               <property name="showDropIndicator" stdset="0">
+                <bool>false</bool>
+               </property>
+               <property name="dragDropOverwriteMode">
+                <bool>false</bool>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::NoSelection</enum>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+               <property name="rowCount">
+                <number>0</number>
+               </property>
+               <attribute name="horizontalHeaderVisible">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                <bool>false</bool>
+               </attribute>
               </widget>
              </item>
             </layout>
            </widget>
           </item>
-          <item>
-           <widget class="QFrame" name="frame_9">
+          <item row="0" column="2" rowspan="3">
+           <widget class="QFrame" name="frame_10">
             <property name="minimumSize">
              <size>
-              <width>570</width>
-              <height>120</height>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QFrame" name="frame_13">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>120</height>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="frame_12">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>40</height>
              </size>
             </property>
             <property name="frameShape">
@@ -835,13 +810,13 @@ QLabel {
         <widget class="QFrame" name="frame_6">
          <property name="minimumSize">
           <size>
-           <width>221</width>
-           <height>528</height>
+           <width>100</width>
+           <height>400</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>300</width>
+           <width>150</width>
            <height>16777215</height>
           </size>
          </property>
@@ -851,62 +826,23 @@ QLabel {
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <property name="class" stdset="0">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="lbl_side_image">
-            <property name="minimumSize">
-             <size>
-              <width>221</width>
-              <height>528</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>0</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="frame_2">
+     <widget class="QFrame" name="frame_3">
       <property name="minimumSize">
        <size>
         <width>800</width>
-        <height>70</height>
+        <height>60</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>70</height>
+        <height>60</height>
        </size>
       </property>
       <property name="frameShape">
@@ -915,10 +851,7 @@ QLabel {
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <property name="class" stdset="0">
-       <string>background-primary</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -935,7 +868,19 @@ QLabel {
         <number>0</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame_3">
+        <widget class="QFrame" name="frame_7">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -945,11 +890,11 @@ QLabel {
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frame_4">
-         <property name="maximumSize">
+        <widget class="QFrame" name="frame_8">
+         <property name="minimumSize">
           <size>
-           <width>200</width>
-           <height>16777215</height>
+           <width>0</width>
+           <height>40</height>
           </size>
          </property>
          <property name="frameShape">
@@ -958,18 +903,9 @@ QLabel {
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="btn_sobre">
-            <property name="text">
-             <string>Sobre</string>
-            </property>
-            <property name="class" stdset="0">
-             <string>btn-outline-dark</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <property name="class" stdset="0">
+          <string>background-primary</string>
+         </property>
         </widget>
        </item>
       </layout>

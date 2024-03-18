@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/media/ihuntgore/Users/Juan/Documents/proyectos/ia/practica1/views/vista_sobre_nosotros.ui'
+# Form implementation generated from reading ui file '/media/ihuntgore/Users/Juan/Documents/proyectos/ia/practica1/views/sm_dialog_clean.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -11,13 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(500, 350)
-        MainWindow.setMinimumSize(QtCore.QSize(500, 350))
-        MainWindow.setMaximumSize(QtCore.QSize(500, 350))
-        MainWindow.setStyleSheet("/*\n"
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(400, 300)
+        Dialog.setMinimumSize(QtCore.QSize(400, 300))
+        Dialog.setMaximumSize(QtCore.QSize(400, 300))
+        Dialog.setStyleSheet("/*\n"
 " *\n"
 " *  Simple Stylesheet inspired on Bootstrap for Qt Designer / Qt Creator \n"
 " *  File: bootstylesheet.css\n"
@@ -50,12 +50,72 @@ class Ui_MainWindow(object):
 "  font-family: \"sans-serif\";\n"
 "}\n"
 "\n"
-"QLabel {\n"
-"  font-size: 22px;\n"
+"/* Border Settings */\n"
+"/* Border Side Weight */\n"
+".b-st-1 {\n"
+"  border-top: 1px solid;\n"
+"}\n"
+".b-sb-1 {\n"
+"  border-bottom: 1px solid;\n"
+"}\n"
+".b-sl-1 {\n"
+"  border-left: 1px solid;\n"
+"}\n"
+".b-sr-1 {\n"
+"  border-right: 1px solid;\n"
+"}\n"
+".b-st-2 {\n"
+"  border-top: 2px solid;\n"
+"}\n"
+".b-sb-2 {\n"
+"  border-bottom: 2px solid;\n"
+"}\n"
+".b-sl-2 {\n"
+"  border-left: 2px solid;\n"
+"}\n"
+".b-sr-2 {\n"
+"  border-right: 2px solid;\n"
+"}\n"
+".b-st-3 {\n"
+"  border-top: 3px solid;\n"
+"}\n"
+".b-sb-3 {\n"
+"  border-bottom: 3px solid;\n"
+"}\n"
+".b-sl-3 {\n"
+"  border-left: 3px solid;\n"
+"}\n"
+".b-sr-3 {\n"
+"  border-right: 3px solid;\n"
+"}\n"
+".b-st-4 {\n"
+"  border-top: 4px solid;\n"
+"}\n"
+".b-sb-4 {\n"
+"  border-bottom: 4px solid;\n"
+"}\n"
+".b-sl-4 {\n"
+"  border-left: 4px solid;\n"
+"}\n"
+".b-sr-4 {\n"
+"  border-right: 4px solid;\n"
 "}\n"
 "\n"
-"QTextEdit {\n"
-"  border: 1px solid;\n"
+"/* Radius */\n"
+".br-1 {\n"
+"  border-radius: 10px;\n"
+"}\n"
+"\n"
+".br-2 {\n"
+"  border-radius: 15px;\n"
+"}\n"
+"\n"
+".br-3 {\n"
+"  border-radius: 20px;\n"
+"}\n"
+"\n"
+".br-4 {\n"
+"  border-radius: 25px;\n"
 "}\n"
 "\n"
 "/* Background colors */\n"
@@ -299,77 +359,11 @@ class Ui_MainWindow(object):
 "  color: #0a58ca;\n"
 "}\n"
 "\n"
-"/* Border styles */\n"
-".nb {\n"
-"  border: 0px solid;\n"
-"}\n"
-"\n"
-".bt-1 {\n"
-"  border-top: 1px solid;\n"
-"}\n"
-".bb-1 {\n"
-"  border-bottom: 1px solid;\n"
-"}\n"
-".bl-1 {\n"
-"  border-left: 1px solid;\n"
-"}\n"
-".br-1 {\n"
-"  border-right: 1px solid;\n"
-"}\n"
-".bt-2 {\n"
-"  border-top: 2px solid;\n"
-"}\n"
-".bb-2 {\n"
-"  border-bottom: 2px solid;\n"
-"}\n"
-".bl-2 {\n"
-"  border-left: 2px solid;\n"
-"}\n"
-".br-2 {\n"
-"  border-right: 2px solid;\n"
-"}\n"
-".bt-3 {\n"
-"  border-top: 3px solid;\n"
-"}\n"
-".bb-3 {\n"
-"  border-bottom: 3px solid;\n"
-"}\n"
-".bl-3 {\n"
-"  border-left: 3px solid;\n"
-"}\n"
-".br-3 {\n"
-"  border-right: 3px solid;\n"
-"}\n"
-".bt-4 {\n"
-"  border-top: 4px solid;\n"
-"}\n"
-".bb-4 {\n"
-"  border-bottom: 4px solid;\n"
-"}\n"
-".bl-4 {\n"
-"  border-left: 4px solid;\n"
-"}\n"
-".br-4 {\n"
-"  border-right: 4px solid;\n"
-"}\n"
-"\n"
-".br-1 {\n"
-"  border-radius: 10px;\n"
-"}\n"
-"\n"
-".br-2 {\n"
-"  border-radius: 15px;\n"
-"}\n"
-"\n"
-".br-3 {\n"
-"  border-radius: 20px;\n"
-"}\n"
-"\n"
-".br-4 {\n"
-"  border-radius: 25px;\n"
-"}\n"
-"\n"
 "/* Title sizes */\n"
+"QLabel {\n"
+"  font-size: 22px;\n"
+"}\n"
+"\n"
 ".h1 {\n"
 "  font-size: 42px;\n"
 "}\n"
@@ -438,85 +432,41 @@ class Ui_MainWindow(object):
 "  color: #141619;\n"
 "  background-color: #d3d3d4;\n"
 "  border-color: #bcbebf;\n"
-"}")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setMinimumSize(QtCore.QSize(400, 270))
-        self.centralwidget.setStyleSheet("")
-        self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.frame_3 = QtWidgets.QFrame(self.centralwidget)
-        self.frame_3.setMaximumSize(QtCore.QSize(16777215, 59))
-        self.frame_3.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_3.setObjectName("frame_3")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_3)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lbl_titulo = QtWidgets.QLabel(self.frame_3)
-        self.lbl_titulo.setAlignment(QtCore.Qt.AlignCenter)
-        self.lbl_titulo.setObjectName("lbl_titulo")
-        self.horizontalLayout.addWidget(self.lbl_titulo)
-        self.verticalLayout.addWidget(self.frame_3)
-        self.frame_2 = QtWidgets.QFrame(self.centralwidget)
-        self.frame_2.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.gridLayout = QtWidgets.QGridLayout(self.frame_2)
+"}\n"
+"")
+        Dialog.setModal(True)
+        self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.lbl_cuerpo = QtWidgets.QLabel(self.frame_2)
-        self.lbl_cuerpo.setAlignment(QtCore.Qt.AlignCenter)
-        self.lbl_cuerpo.setWordWrap(True)
-        self.lbl_cuerpo.setObjectName("lbl_cuerpo")
-        self.gridLayout.addWidget(self.lbl_cuerpo, 0, 0, 1, 1)
-        self.verticalLayout.addWidget(self.frame_2)
-        self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setMaximumSize(QtCore.QSize(16777215, 60))
+        self.frame = QtWidgets.QFrame(Dialog)
         self.frame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.frame)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.frame_4 = QtWidgets.QFrame(self.frame)
-        self.frame_4.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_4.setObjectName("frame_4")
-        self.horizontalLayout_2.addWidget(self.frame_4)
-        self.frame_5 = QtWidgets.QFrame(self.frame)
-        self.frame_5.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.frame_5.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_5.setObjectName("frame_5")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame_5)
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame)
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_2.setHorizontalSpacing(0)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.btn_volver = QtWidgets.QPushButton(self.frame_5)
-        self.btn_volver.setObjectName("btn_volver")
-        self.gridLayout_2.addWidget(self.btn_volver, 0, 0, 1, 1)
-        self.horizontalLayout_2.addWidget(self.frame_5)
-        self.verticalLayout.addWidget(self.frame)
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.lbl_main_text = QtWidgets.QLabel(self.frame)
+        self.lbl_main_text.setWordWrap(True)
+        self.lbl_main_text.setObjectName("lbl_main_text")
+        self.gridLayout_2.addWidget(self.lbl_main_text, 0, 0, 1, 1, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.centralwidget.setProperty("class", _translate("MainWindow", "background-white"))
-        self.lbl_titulo.setText(_translate("MainWindow", "Sobre esta aplicacion"))
-        self.lbl_titulo.setProperty("class", _translate("MainWindow", "h5 color-primary"))
-        self.lbl_cuerpo.setText(_translate("MainWindow", "Esta aplicacion no es más que un experimento para implementar modelo-vista-controlador y facilitar la programacion de aplicaciones grandes implementado interfaces de  Qt Designer"))
-        self.lbl_cuerpo.setProperty("class", _translate("MainWindow", "h5"))
-        self.btn_volver.setText(_translate("MainWindow", "Volver"))
-        self.btn_volver.setProperty("class", _translate("MainWindow", "btn-primary"))
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setProperty("class", _translate("Dialog", "background-light"))
+        self.lbl_main_text.setText(_translate("Dialog", "Text Sample"))
+        self.lbl_main_text.setProperty("class", _translate("Dialog", "h1 color-primary"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
     sys.exit(app.exec_())

@@ -1,0 +1,365 @@
+/*
+ *
+ *  Simple Stylesheet inspired on Bootstrap for Qt Designer / Qt Creator 
+ *  File: bootstylesheet.css
+ *  Author: JuanLoaiza007
+ *  Version: 1.0.0
+ *
+ */
+
+/*  # Español
+ *  Instrucciones para aplicar en Qt Designer / Qt Creator
+ *  1. Busque la vista de Inspector de objetos >> Objeto >> "MainWindow".
+ *  2. Dale clic derecho a "MainWindow" y seleccione "Cambiar HojaDeEstilos" o algo similar.
+ *  3. Pegue el contenido de este archivo ahí.
+ *  4. De clic en Aplicar y Aceptar.
+ *  5. Para aplicar los estilos seleccione un objeto, en el Editor de Propiedades agregue un Filtro tipo cadena de texto y nombrelo "class".
+ *  6. En el Editor de Propiedades habrá una seccion nueva llamada "Propiedades dinámicas" y una propiedad llamada "class", en la casilla de la derecha aplique todos los estilos que desee, eg. "btn btn-outline-primary br-4". 
+ */
+
+/*  # English
+ *  Instructions to apply in Qt Designer / Qt Creator
+ *  1. Keep an eye on the Object Inspector >> Object >> "MainWindow".
+ *  2. Right click on "MainWindow" and select "Change StyleSheet" or something similar.
+ *  3. Paste the content of this file there.
+ *  4. Click Apply and Accept.
+ *  5. To apply the styles, select an object, in the Properties Editor add a Text String Filter and name it "class".
+ *  6. In the Property Editor there will be a new section called "Dynamic Properties" and a property called "class", in the box on the right apply all the styles you want, eg. "btn btn-outline-primary br-4". 
+ */
+
+QMainWindow {
+  font-family: "sans-serif";
+}
+
+/* Background colors */
+.background-white {
+  background-color: white;
+}
+.background-light {
+  background-color: #f8f9fa;
+}
+.background-black {
+  background-color: black;
+}
+.background-primary {
+  background-color: #0d6efd;
+}
+.background-success {
+  background-color: #198754;
+}
+.background-warning {
+  background-color: #ffc720;
+}
+.background-danger {
+  background-color: #dc3545;
+}
+
+/* Colors */
+.color-white {
+  color: white;
+}
+.color-light {
+  color: #f8f9fa;
+}
+.color-black {
+  color: black;
+}
+.color-primary {
+  color: #0d6efd;
+}
+.color-success {
+  color: #198754;
+}
+.color-warning {
+  color: #ffc720;
+}
+.color-danger {
+  color: #dc3545;
+}
+
+/* Buttons */
+QPushButton {
+  font-weight: 500;
+  color: white;
+  background-color: gray;
+  padding: 6px 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+
+.btn {
+  font-weight: 500;
+  color: white;
+  background-color: gray;
+  padding: 6px 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #5c636a;
+  border-color: #565e64;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+.btn-success:hover {
+  color: #fff;
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+.btn-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+.btn-warning:hover {
+  color: #000;
+  background-color: #ffca2c;
+  border-color: #ffc720;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.btn-danger:hover {
+  color: #fff;
+  background-color: #bb2d3b;
+  border-color: #b02a37;
+}
+
+.btn-light {
+  color: #000;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+.btn-light:hover {
+  color: #000;
+  background-color: #f9fafb;
+  border-color: #f9fafb;
+}
+
+.btn-dark {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+}
+.btn-dark:hover {
+  color: #fff;
+  background-color: #1c1f23;
+  border-color: #1a1e21;
+}
+
+.btn-outline-primary {
+  background-color: white;
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-outline-secondary {
+  background-color: white;
+  color: #6c757d;
+  border-color: #6c757d;
+}
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-success {
+  background-color: white;
+  color: #198754;
+  border-color: #198754;
+}
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-outline-info {
+  background-color: white;
+  color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+.btn-outline-info:hover {
+  color: #000;
+  background-color: #0dcaf0;
+}
+
+.btn-outline-warning {
+  background-color: white;
+  color: #ffc107;
+  border-color: #ffc107;
+}
+.btn-outline-warning:hover {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-outline-danger {
+  background-color: white;
+  color: #dc3545;
+  border-color: #dc3545;
+}
+.btn-outline-danger:hover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-light {
+  background-color: #41464b;
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+.btn-outline-light:hover {
+  color: #000;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.btn-outline-dark {
+  background-color: white;
+  color: #212529;
+  border-color: #212529;
+}
+.btn-outline-dark:hover {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+}
+
+.btn-link {
+  background-color: white;
+  font-weight: 400;
+  color: #0d6efd;
+  text-decoration: underline;
+}
+.btn-link:hover {
+  color: #0a58ca;
+}
+
+/* Border radius */
+.br-1 {
+  border-radius: 10px;
+}
+
+.br-2 {
+  border-radius: 15px;
+}
+
+.br-3 {
+  border-radius: 20px;
+}
+
+.br-4 {
+  border-radius: 25px;
+}
+
+/* Title sizes */
+QLabel {
+  font-size: 22px;
+}
+
+.h1 {
+  font-size: 42px;
+}
+
+.h2 {
+  font-size: 36px;
+}
+
+.h3 {
+  font-size: 32px;
+}
+
+.h4 {
+  font-size: 28px;
+}
+
+.h5 {
+  font-size: 22px;
+}
+
+.h6 {
+  font-size: 18px;
+}
+
+/* Alerts */
+.alert {
+  border: 1px solid;
+}
+
+.alert-primary {
+  color: #084298;
+  background-color: #cfe2ff;
+  border-color: #b6d4fe;
+}
+.alert-secondary {
+  color: #41464b;
+  background-color: #e2e3e5;
+  border-color: #d3d6d8;
+}
+.alert-success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+.alert-info {
+  color: #055160;
+  background-color: #cff4fc;
+  border-color: #b6effb;
+}
+.alert-warning {
+  color: #664d03;
+  background-color: #fff3cd;
+  border-color: #ffecb5;
+}
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+.alert-light {
+  color: #636464;
+  background-color: #fefefe;
+  border-color: #fdfdfe;
+}
+.alert-dark {
+  color: #141619;
+  background-color: #d3d3d4;
+  border-color: #bcbebf;
+}

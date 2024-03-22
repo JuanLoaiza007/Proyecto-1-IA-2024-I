@@ -1,6 +1,9 @@
+# [modelo_juego.py]
+
 import os
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt, QSize
 from models.agente_reflejo_simple import agente_reflejo_simple as agente
 from models.tools.world_tools import world_tools
 from models.tools.temporizador import Temporizador
@@ -54,7 +57,8 @@ class modelo_juego:
                                 "modelo_juego.py: actualizar_tabla ha omitido cargar el elemento ", elemento)
 
                 icon = QIcon(pixmap)
-                item.setIcon(icon)
+                item.setData(Qt.DecorationRole, icon)
+                self.tabla_juego.setIconSize(QSize(38, 38))
                 self.tabla_juego.setItem(i, j, item)
 
     def iniciar_juego(self):

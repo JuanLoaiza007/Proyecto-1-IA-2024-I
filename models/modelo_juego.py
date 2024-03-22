@@ -58,7 +58,8 @@ class modelo_juego:
 
                 icon = QIcon(pixmap)
                 item.setData(Qt.DecorationRole, icon)
-                self.tabla_juego.setIconSize(QSize(38, 38))
+                icon_size = 45
+                self.tabla_juego.setIconSize(QSize(icon_size, icon_size))
                 self.tabla_juego.setItem(i, j, item)
 
     def iniciar_juego(self):

@@ -4,18 +4,20 @@ from tkinter import filedialog
 
 
 class File_selector:
-    ruta_proyecto = os.getcwd()
-    ruta_completa = os.path.join(ruta_proyecto, "worlds")
-
     @staticmethod
-    def select():
+    def select(initial_folder=None):
+        if initial_folder is None:
+            # Si no se proporciona una carpeta inicial, se usará el directorio actual
+            initial_folder = os.getcwd()
+        else:
+            initial_folder = os.path.abspath(initial_folder)
+
         # Crear una ventana de tkinter para el selector de archivos
         root = tk.Tk()
         root.withdraw()  # Ocultar la ventana principal de tkinter
 
         # Abrir el cuadro de diálogo para seleccionar un archivo
-        archivo = filedialog.askopenfilename(
-            initialdir=File_selector.ruta_completa)
+        archivo = filedialog.askopenfilename(initialdir=initial_folder)
 
         # Cerrar la ventana de tkinter
         root.destroy()

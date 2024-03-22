@@ -61,7 +61,7 @@ class modelo_juego:
 
         # Cargar archivo de mundo
         file_selector = File_selector()
-        archivo = file_selector.select()
+        archivo = file_selector.select("data/worlds")
 
         # Generar mundo
         ambiente = world_tools.generar_mundo(archivo)

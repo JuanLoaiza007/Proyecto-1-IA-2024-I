@@ -97,7 +97,7 @@ class modelo_juego:
         # Animacion del camino
         for paso in camino:
 
-            Temporizador.iniciar(2)
+            Temporizador.iniciar(1)
             self.actualizar_tabla(
                 ambiente, paso, mando.get_meta())
 

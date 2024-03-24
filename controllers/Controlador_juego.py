@@ -86,17 +86,26 @@ class Controlador_juego:
         self.MainWindow.setEnabled(True)
 
     def iniciar_juego(self):
-        self.modelo.iniciar_juego()
-        self.animar_juego()
-
-    def animar_juego(self):
+        Temporizador.iniciar(100)
+        self.modelo.preparar_juego()
         ambiente = self.modelo.ambiente
         e_inicial = self.modelo.estado_inicial.get_coordenadas()
         e_objetivo = self.modelo.estado_objetivo.get_coordenadas()
         self.actualizar_tabla(ambiente, e_inicial, e_objetivo)
+        self.ui.lbl_estado_agente.setText(
+            "Mando esta pensando... *guiño guiño*")
 
+        Temporizador.iniciar(100)
+        self.modelo.iniciar_juego()
+        self.ui.lbl_estado_agente.setText(
+            "Mando ha tomado una decision")
+
+        Temporizador.iniciar(100)
+        self.animar_juego()
+
+    def animar_juego(self):
         for paso in self.modelo.camino:
-            Temporizador.iniciar(1500)
+            Temporizador.iniciar(600)
             self.actualizar_tabla(
                 self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
 

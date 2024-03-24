@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/ihuntgore/Escritorio/proyectos/ia/Proyecto-IA-2024-1/views/sm_dialog_clean.ui'
+# Form implementation generated from reading ui file '/home/ihuntgore/Escritorio/proyectos/ia/Proyecto-1-IA-2024-I/views/Sm_dialog_clean.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #

@@ -22,6 +22,7 @@ class Modelo_juego:
         self.estado_inicial = None
         self.estado_objetivo = None
         self.resultado = None
+        self.problema_inicial = None
 
         self.assets_dic = wtools.reconocer_assets()
         self.env_objects_dic = wtools.reconocer_objetos()
@@ -34,7 +35,7 @@ class Modelo_juego:
         self.enemigo = os.path.abspath(self.assets_dic['enemigo'])
         self.grogu = os.path.abspath(self.assets_dic['meta'])
 
-    def iniciar_juego(self):
+    def preparar_juego(self):
         # Cargar archivo de mundo
         file_selector = File_selector()
         archivo = file_selector.select("data/worlds")
@@ -54,9 +55,12 @@ class Modelo_juego:
         # Eliminar el self.estado_inicial del ambiente
         self.ambiente[x_ini][y_ini] = "0"
 
-        problema = Problema(self.estado_inicial,
-                            self.estado_objetivo, self.ambiente)
-        self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
-            problema)
+        self.problema_inicial = Problema(self.estado_inicial,
+                                         self.estado_objetivo, self.ambiente)
 
-        print_debug("Camino es {}".format(str(self.camino)))
+    def iniciar_juego(self):
+        self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
+            self.problema_inicial)
+
+        print_debug("Camino es {}\nResultado es {}\n".format(
+            str(self.camino), str(self.resultado)))

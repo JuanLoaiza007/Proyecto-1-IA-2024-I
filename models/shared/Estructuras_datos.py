@@ -321,3 +321,18 @@ class Test():
         else:
             for hijo in hijos:
                 print(hijo)
+
+        if len(hijos) != 0:
+
+            hijo_favorito = hijos[0]
+            print("El hijo favorito es:\n{}\n".format(str(hijo_favorito)))
+
+            nietos = hijo_favorito.expandir()
+
+            nieto_favorito = nietos[1]
+
+            print("Sus nieto favorito es:\n{}".format(str(nieto_favorito)))
+
+            if str(nieto_favorito.get_estado()) == str(hijo.get_padre().get_estado()):
+                print("El nieto:\n{}\nes igual al padre:\n{}\n".format(
+                    str(nieto_favorito), str(hijo.get_padre())))

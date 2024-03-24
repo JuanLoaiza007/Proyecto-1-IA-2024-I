@@ -4,12 +4,19 @@ import os
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QStandardItemModel, QPixmap, QIcon
+from PyQt5.QtGui import QPixmap, QIcon
 from views.vista_juego import Ui_MainWindow
 from models.modelo_juego import modelo_juego
-from views.sm_dialog_clean import Ui_Dialog as sm_dialog_clean
 from models.tools.temporizador import Temporizador
 from models.tools.dialog import Dialog
+
+debug = False
+
+
+def print_debug(message):
+    new_message = "controlador_juego.py: " + message
+    if debug:
+        print(new_message)
 
 
 class controlador_juego:
@@ -28,23 +35,10 @@ class controlador_juego:
         self.ui.table_mapa.setColumnCount(10)
         self.ui.table_mapa.verticalHeader().setVisible(False)
         self.ui.table_mapa.horizontalHeader().setVisible(False)
-
-        size_policy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        size_policy.setHorizontalStretch(0)
-        size_policy.setVerticalStretch(0)
-        self.ui.table_mapa.setSizePolicy(size_policy)
         self.ui.table_mapa.horizontalHeader().setSectionResizeMode(
             QtWidgets.QHeaderView.Stretch)
         self.ui.table_mapa.verticalHeader().setSectionResizeMode(
             QtWidgets.QHeaderView.Stretch)
-
-        self.ui.table_mapa.horizontalHeader().setSectionResizeMode(
-            0, QtWidgets.QHeaderView.Stretch)
-        self.ui.table_mapa.verticalHeader().setSectionResizeMode(
-            0, QtWidgets.QHeaderView.Stretch)
-
-        self.modelo.setTabla(self.ui.table_mapa)
 
     def actualizar_tabla(self, ambiente, coordenadas_agente, coordenadas_meta):
         for i, fila in enumerate(ambiente):
@@ -68,9 +62,8 @@ class controlador_juego:
                     elif elemento == self.modelo.env_objects_dic['nave']:
                         pixmap = QPixmap(self.modelo.nave)
                     else:
-                        if self.debug:
-                            print(
-                                "modelo_juego.py: actualizar_tabla ha omitido cargar el elemento ", elemento)
+                        print_debug(
+                            "actualizar_tabla ha omitido cargar el elemento {}".format(str(elemento)))
 
                 icon = QIcon(pixmap)
                 item.setData(Qt.DecorationRole, icon)
@@ -81,7 +74,7 @@ class controlador_juego:
     def mostrar(self, main_window):
         self.cargar(main_window)
         self.MainWindow.show()
-        Temporizador.iniciar(0.1)
+        Temporizador.iniciar(1)
         self.iniciar_juego()
 
     def block_focus(self, window):
@@ -99,7 +92,7 @@ class controlador_juego:
 
     def animar_juego(self):
         for paso in self.modelo.camino:
-            Temporizador.iniciar(1.5)
+            Temporizador.iniciar(1500)
             self.actualizar_tabla(
                 self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
 

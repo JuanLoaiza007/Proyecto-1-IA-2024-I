@@ -1,15 +1,10 @@
 # [modelo_juego.py]
 
 import os
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt, QSize
 from models.estructura_datos import Accion, Celda, Estado, Problema
 from models.agente_reflejo_simple import agente_reflejo_simple as Agente
 from models.tools.world_tools import world_tools as wtools
-from models.tools.temporizador import Temporizador
 from models.tools.file_selector import File_selector
-from models.tools.dialog import Dialog
 
 debug = False
 
@@ -22,8 +17,6 @@ def print_debug(message):
 
 class modelo_juego:
     def __init__(self):
-        self.tabla_juego = None
-        self.debug = False
         self.camino = None
         self.ambiente = None
         self.estado_objetivo = None
@@ -39,9 +32,6 @@ class modelo_juego:
         self.nave = os.path.abspath(self.assets_dic['nave'])
         self.enemigo = os.path.abspath(self.assets_dic['enemigo'])
         self.grogu = os.path.abspath(self.assets_dic['meta'])
-
-    def setTabla(self, tabla,):
-        self.tabla_juego = tabla
 
     def iniciar_juego(self):
         # Cargar archivo de mundo

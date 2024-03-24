@@ -1,10 +1,5 @@
 # [estructura_datos.py]
 
-from agente_reflejo_simple import agente_reflejo_simple as Agente
-from tools.file_selector import File_selector
-from tools.world_tools import world_tools as wtools
-
-
 class Accion:
     def __init__(self, nombre, dx, dy):
         """
@@ -126,8 +121,6 @@ class Problema:
             True, si el estado es el objetivo.
             False, si el estado no es el objetivo
         """
-        print("(func) es_objetivo: estado: {} objetivo: {}".format(
-            str(estado.get_coordenadas()), str(estado_objetivo.get_coordenadas())))
         return estado.get_coordenadas() == self.estado_objetivo.get_coordenadas()
 
     def generar_acciones(self, estado):
@@ -166,56 +159,3 @@ class Problema:
             return nuevo_estado
         else:
             return None
-
-
-if __name__ == '__main__':
-    # Reconocer los objetos del entorno
-    env_objects_dic = wtools.reconocer_objetos()
-
-    # Cargar archivo de mundo
-    file_selector = File_selector()
-    archivo = file_selector.select("data/worlds")
-
-    # Generar mundo
-    ambiente = wtools.generar_mundo(archivo)
-
-    # Inicializar estado inicial y estado objetivo
-    x_ini, y_ini = wtools.determinar_posicion(
-        ambiente, env_objects_dic['agente'])
-    x_meta, y_meta = wtools.determinar_posicion(
-        ambiente, env_objects_dic['meta'])
-
-    mando = Agente([x_ini, y_ini])
-    estado_inicial = Estado(mando.get_x(), mando.get_y())
-    estado_objetivo = Estado(x_meta, y_meta)
-
-    # Eliminar el estado_inicial del ambiente
-    print("x_ini: {}, y_ini: {}".format(str(x_ini), str(y_ini)))
-    ambiente[x_ini][y_ini] = "0"
-
-    estado_actual = estado_inicial
-    nuevo_estado = None
-
-    while True:
-        problema = Problema(estado_actual, estado_objetivo, ambiente)
-        print("Coordenadas estado_actual: {}".format(
-            str(estado_actual.get_coordenadas())))
-        wtools.imprimir_juego(env_objects_dic, ambiente,
-                              [mando.get_x(), mando.get_y()], [x_meta, y_meta])
-        if (problema.es_objetivo(estado_actual)):
-            break
-
-        acciones_validas = problema.generar_acciones(estado_actual)
-        print("Acciones válidas desde el estado actual:", [
-              accion.nombre for accion in acciones_validas])
-
-        accion = mando.tomar_decision(acciones_validas)
-        print("El agente decidió: {}".format(str(accion.get_nombre())))
-
-        nuevo_estado = problema.resultado(estado_actual, accion)
-        mando.set_coordenadas(nuevo_estado.get_coordenadas())
-        print("Las coordenadas del agente son: {}".format(
-            str(mando.get_coordenadas())))
-
-        estado_actual = nuevo_estado
-        nuevo_estado = None

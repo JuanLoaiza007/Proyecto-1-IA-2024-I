@@ -30,18 +30,5 @@ class agente_reflejo_simple():
                 return accion
         return None
 
-    def iniciar_viaje(self):
-
-        en_viaje = True
-        resultado = "Estoy perdido"
-
-        while (en_viaje):
-            en_viaje = self.tomar_decision()
-
-            # Verificacion de ciclo:
-            # for elemento in self.pasos[:-1]:
-            #     if elemento == self.coordenadas:
-            #         resultado = "Ya paśe por aqui, algo anda mal :("
-            #         en_viaje = False
-
-        return self.pasos, resultado
+    def get_pasos(self):
+        return self.pasos

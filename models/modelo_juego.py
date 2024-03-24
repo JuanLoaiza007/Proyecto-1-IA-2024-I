@@ -4,11 +4,20 @@ import os
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QSize
-from models.agente_reflejo_simple import agente_reflejo_simple as agente
-from models.tools.world_tools import world_tools
+from models.estructura_datos import Accion, Celda, Estado, Problema
+from models.agente_reflejo_simple import agente_reflejo_simple as Agente
+from models.tools.world_tools import world_tools as wtools
 from models.tools.temporizador import Temporizador
 from models.tools.file_selector import File_selector
 from models.tools.dialog import Dialog
+
+debug = False
+
+
+def print_debug(message):
+    new_message = "modelo_juego.py: " + message
+    if debug:
+        print(new_message)
 
 
 class modelo_juego:
@@ -16,8 +25,8 @@ class modelo_juego:
         self.tabla_juego = None
         self.debug = False
 
-        self.assets_dic = world_tools.reconocer_assets()
-        self.env_objects_dic = world_tools.reconocer_objetos()
+        self.assets_dic = wtools.reconocer_assets()
+        self.env_objects_dic = wtools.reconocer_objetos()
 
         # Personajes
         self.vacio = os.path.abspath(self.assets_dic['vacio'])
@@ -69,36 +78,64 @@ class modelo_juego:
         archivo = file_selector.select("data/worlds")
 
         # Generar mundo
-        ambiente = world_tools.generar_mundo(archivo)
+        ambiente = wtools.generar_mundo(archivo)
 
-        # Creacion de agente / arbol de busqueda
-        # El agente/arbol debe recibir:
-        # * Las coordenadas iniciales
-        # * El ambiente o mapa (matriz)
-        # * Las coordenadas de la meta
-        mando = agente()
-        mando.set_coordenadas(world_tools.determinar_posicion(
-            ambiente, self.env_objects_dic['agente']))
-        mando.set_ambiente(ambiente, self.env_objects_dic)
-        mando.set_meta(world_tools.determinar_posicion(
-            ambiente, self.env_objects_dic['meta']))
+        # Inicializar estado inicial y estado objetivo
+        x_ini, y_ini = wtools.determinar_posicion(
+            ambiente, self.env_objects_dic['agente'])
+        x_meta, y_meta = wtools.determinar_posicion(
+            ambiente, self.env_objects_dic['meta'])
 
-        # Limpiar ambiente para mostrar en pantalla
-        ambiente[mando.coordenadas[0]][mando.coordenadas[1]] = 0
-        self.actualizar_tabla(ambiente,
-                              mando.get_coordenadas(), mando.get_meta())
+        mando = Agente([x_ini, y_ini])
+        estado_inicial = Estado(mando.get_x(), mando.get_y())
+        estado_objetivo = Estado(x_meta, y_meta)
 
-        # Iniciar viaje del agente / arbol de busqueda
-        # La funcion iniciar_viaje se usa para la animacion, debe retornar:
-        # * camino: Una lista de coordenadas que representa los pasos que tomó
-        # * resultado: Un mensaje que indique en que concluyó el camino
-        camino, resultado = mando.iniciar_viaje()
+        # Eliminar el estado_inicial del ambiente
+        print_debug("x_ini: {}, y_ini: {}".format(str(x_ini), str(y_ini)))
+        ambiente[x_ini][y_ini] = "0"
 
-        # Animacion del camino
+        estado_actual = estado_inicial
+        nuevo_estado = None
+        resultado = "Estoy perdido"
+
+        self.actualizar_tabla(
+            ambiente, mando.get_coordenadas(), estado_objetivo.get_coordenadas())
+
+        while True:
+            problema = Problema(estado_actual, estado_objetivo, ambiente)
+            print_debug("Coordenadas estado_actual: {}".format(
+                str(estado_actual.get_coordenadas())))
+            if (problema.es_objetivo(estado_actual)):
+                resultado = "Lo logré"
+                break
+
+            acciones_validas = problema.generar_acciones(estado_actual)
+            if len(acciones_validas) == 0:
+                resultado = "Estoy perdido"
+                break
+            print_debug("Acciones válidas desde el estado actual: {}".format(str([
+                accion.nombre for accion in acciones_validas])))
+
+            accion = mando.tomar_decision(acciones_validas)
+            if accion == None:
+                resultado = "No se que hacer en esta situacion :("
+                break
+            print_debug("El agente decidió: {}".format(
+                str(accion.get_nombre())))
+
+            nuevo_estado = problema.resultado(estado_actual, accion)
+            mando.set_coordenadas(nuevo_estado.get_coordenadas())
+            print_debug("Las coordenadas del agente son: {}".format(
+                str(mando.get_coordenadas())))
+
+            estado_actual = nuevo_estado
+            nuevo_estado = None
+
+        camino = mando.get_pasos()
+
         for paso in camino:
-
-            Temporizador.iniciar(1)
+            Temporizador.iniciar(1.5)
             self.actualizar_tabla(
-                ambiente, paso, mando.get_meta())
+                ambiente, paso, estado_objetivo.get_coordenadas())
 
         Dialog.mostrar(resultado)

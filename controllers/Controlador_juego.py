@@ -6,8 +6,8 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
 from views.Vista_juego import Ui_MainWindow
 from models.Modelo_juego import Modelo_juego
-from models.tools.Temporizador import Temporizador
-from models.tools.Dialog import Dialog
+from models.shared.tools.Temporizador import Temporizador
+from models.shared.tools.Dialog import Dialog
 
 debug = False
 

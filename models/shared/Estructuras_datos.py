@@ -1,4 +1,6 @@
 # [Estructura_datos.py]
+from queue import Queue
+
 
 class Operador:
     def __init__(self, nombre: str, dx: int, dy: int) -> None:
@@ -177,23 +179,25 @@ class Nodo:
     - El costo de la ruta desde la raíz hasta el nodo
     """
 
-    def __init__(self):
+    def __init__(self, problema: Problema):
         """
-        Inicializa un nuevo nodo.
+        Inicializa un nuevo nodo raiz.
 
-        Atributos:
+        Args:
+            problema (Problema): El problema
+
+        Atributos internos (get):
         - estado: El estado del problema.
         - padre: Una referencia al nodo padre.
         - operador: El operador que se aplicó para generar el nodo.
         - profundidad: La profundidad del nodo en el árbol.
         - costo_acumulado: El costo acumulado de la ruta desde la raíz hasta el nodo.
         """
-        self.problema: Problema = None
+        self.problema: Problema = problema
         self.padre: Nodo = None
         self.operador: Operador = None
-        self.profundidad: int = None
-        self.costo_acumulado: int = None
-        self.hijos: "list[Nodo]" = []
+        self.profundidad: int = 0
+        self.costo_acumulado: int = 0
 
     def __str__(self) -> str:
         padre = None
@@ -247,18 +251,15 @@ class Nodo:
             Ninguno.
 
         Returns:
-            list[Nodo], bool: Donde list[Nodo] corresponde a los hijos y bool a si el nodo actual es meta.
+            list[Nodo]: Donde list[Nodo] corresponde a los hijos.
         """
         # Limpiar hijos por si las moscas
         self.hijos = []
 
-        if self.es_meta():
-            return self.hijos, True
-
         operadores = self.problema.generar_operadores()
 
         if len(operadores) == 0:
-            return self.hijos, False
+            return self.hijos
 
         for operador in operadores:
             nuevo_estado = self.problema.resultado(
@@ -268,8 +269,7 @@ class Nodo:
                 nuevo_estado, self.problema.get_estado_objetivo(), self.problema.get_matriz())
 
             if nuevo_estado != None:
-                hijo = Nodo()
-                hijo.set_problema(nuevo_problema)
+                hijo = Nodo(nuevo_problema)
                 hijo.set_padre(self)
                 hijo.set_operador(operador)
                 hijo.set_profundidad(self.profundidad + 1)
@@ -277,13 +277,14 @@ class Nodo:
 
                 self.hijos.append(hijo)
 
-        return self.hijos, False
+        return self.hijos
 
 
 class Test():
+    @staticmethod
     def start():
-        from models.tools.World_tools import World_tools as wtools
-        from models.tools.File_selector import File_selector
+        from models.shared.tools.World_tools import World_tools as wtools
+        from models.shared.tools.File_selector import File_selector
 
         env_objects_dic = wtools.reconocer_objetos()
 
@@ -309,14 +310,14 @@ class Test():
         problema = Problema(estado_inicial, estado_objetivo, ambiente)
 
         # Creando Nodo Padre
-        nodo = Nodo()
-        nodo.set_problema(problema)
-        nodo.set_profundidad(0)
-        nodo.set_costo_acumulado(0)
-        print("Nodo padre: {}\n".format(nodo))
+        nodo = Nodo(problema)
+        print("Nodo padre:\n{}\n".format(nodo))
 
         # Creando nodos hijos
         print("Hijos:\n")
-        hijos, resultado = nodo.expandir()
-        for hijo in hijos:
-            print(hijo)
+        hijos = nodo.expandir()
+        if len(hijos) == 0:
+            print("Este nodo no tiene hijos...")
+        else:
+            for hijo in hijos:
+                print(hijo)

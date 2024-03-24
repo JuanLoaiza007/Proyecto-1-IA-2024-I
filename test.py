@@ -1,4 +1,3 @@
-from models.Estructuras_datos import *
+from models.trees.Amplitud import *
 
-test = Test()
-test.start()
+Test.start()

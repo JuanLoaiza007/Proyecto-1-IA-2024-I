@@ -32,12 +32,12 @@ class Amplitud:
             for hijo in hijos:
 
                 if evitar_devolverse and Amplitud.se_ha_devuelto(hijo):
-                    print_debug("paso, {} es igual a {}".format(
+                    print_debug("paso, queria ir a {} pero hace dos pasos estuve en {}".format(
                         str(hijo.get_estado()), str(nodo.get_padre().get_estado())))
                     continue
 
                 if evitar_ciclo and Amplitud.cayo_en_ciclo(hijo):
-                    print_debug("paso, se ha repetido el antecesor{}".format(
+                    print_debug("paso, hace un tiempo estuve en {}, evitare entrar en ciclo".format(
                         str(hijo.get_estado())))
                     continue
                 cola.put(hijo)  # Agrega los hijos a la cola

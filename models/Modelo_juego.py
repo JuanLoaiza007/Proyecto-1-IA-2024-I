@@ -1,12 +1,12 @@
 # [Modelo_juego.py]
 
 import os
-from models.Estructuras_datos import Estado
-from models.Agente import Agente as Agente
-from models.tools.World_tools import World_tools as wtools
-from models.tools.File_selector import File_selector
+from models.trees.Amplitud import *
+from models.shared.Estructuras_datos import Estado
+from models.shared.tools.World_tools import World_tools as wtools
+from models.shared.tools.File_selector import File_selector
 
-debug = False
+debug = True
 
 
 def print_debug(message):
@@ -51,12 +51,12 @@ class Modelo_juego:
         self.estado_inicial = Estado(x_ini, y_ini)
         self.estado_objetivo = Estado(x_meta, y_meta)
 
-        # Inicializar el agente
-        mando = Agente([x_ini, y_ini])
-
         # Eliminar el self.estado_inicial del ambiente
         self.ambiente[x_ini][y_ini] = "0"
 
-        # Iniciar el viaje del Agente/Arbol y obtener los resultados
-        self.camino, self.resultado = mando.iniciar_viaje(
-            self.estado_inicial, self.estado_objetivo, self.ambiente)
+        problema = Problema(self.estado_inicial,
+                            self.estado_objetivo, self.ambiente)
+        self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
+            problema)
+
+        print_debug("Camino es {}".format(str(self.camino)))

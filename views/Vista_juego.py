@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/ihuntgore/Escritorio/proyectos/ia/Proyecto-IA-2024-1/views/vista_juego.ui'
+# Form implementation generated from reading ui file '/home/ihuntgore/Escritorio/proyectos/ia/Proyecto-1-IA-2024-I/views/Vista_juego.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #
@@ -562,6 +562,14 @@ class Ui_MainWindow(object):
         self.frame_8.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame_8.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_8.setObjectName("frame_8")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.frame_8)
+        self.horizontalLayout_4.setContentsMargins(-1, 0, -1, 0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.lbl_estado_agente = QtWidgets.QLabel(self.frame_8)
+        self.lbl_estado_agente.setText("")
+        self.lbl_estado_agente.setAlignment(QtCore.Qt.AlignCenter)
+        self.lbl_estado_agente.setObjectName("lbl_estado_agente")
+        self.horizontalLayout_4.addWidget(self.lbl_estado_agente)
         self.verticalLayout_2.addWidget(self.frame_8)
         self.verticalLayout.addWidget(self.frame_3)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -573,9 +581,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.centralwidget.setProperty("class", _translate("MainWindow", "background-white"))
-        self.lbl_titulo.setText(_translate("MainWindow", "TextLabel"))
+        self.lbl_titulo.setText(_translate("MainWindow", "Juego"))
         self.lbl_titulo.setProperty("class", _translate("MainWindow", "h1 color-primary"))
         self.frame_8.setProperty("class", _translate("MainWindow", "background-primary"))
+        self.lbl_estado_agente.setProperty("class", _translate("MainWindow", "h5 color-white"))
 
 
 if __name__ == "__main__":

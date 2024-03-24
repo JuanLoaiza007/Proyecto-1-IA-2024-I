@@ -96,7 +96,7 @@ class Controlador_juego:
         self.actualizar_tabla(ambiente, e_inicial, e_objetivo)
 
         for paso in self.modelo.camino:
-            Temporizador.iniciar(1500)
+            Temporizador.iniciar(500)
             self.actualizar_tabla(
                 self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
 

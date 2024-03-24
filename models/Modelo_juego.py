@@ -59,4 +59,5 @@ class Modelo_juego:
         self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
             problema)
 
-        print_debug("Camino es {}".format(str(self.camino)))
+        print_debug("Camino es {}\nResultado es {}\n".format(
+            str(self.camino), str(self.resultado)))

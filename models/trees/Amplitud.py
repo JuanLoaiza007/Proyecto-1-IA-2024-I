@@ -2,28 +2,51 @@
 
 from models.shared.Estructuras_datos import *
 
+evitar_devolverse = True
+evitar_ciclo = True
+
+debug = True
+
+
+def print_debug(message):
+    new_message = "Amplitud.py: " + message
+    if debug:
+        print(new_message)
+
 
 class Amplitud:
     @staticmethod
-    def busqueda_preferente_por_amplitud(problema):
+    def busqueda_preferente_por_amplitud(problema: Problema):
         cola = Queue()
         cola.put(Nodo(problema))  # Agrega el nodo raíz a la cola
 
         while not cola.empty():
-            nodo = cola.get()  # Saca un nodo de la cola
+            nodo: Nodo = cola.get()  # Saca un nodo de la cola
 
             if nodo.es_meta():
                 camino = Amplitud.reconstruir_camino(nodo)
                 return camino, 'Encontré a grogu'
 
-            hijos = nodo.expandir()  # Expande el nodo y obtiene sus hijos
+            # Expande el nodo y obtiene sus hijos
+            hijos: "list[Nodo]" = nodo.expandir()
             for hijo in hijos:
+
+                if evitar_devolverse and Amplitud.se_ha_devuelto(hijo):
+                    print_debug("paso, {} es igual a {}".format(
+                        str(hijo.get_estado()), str(nodo.get_padre().get_estado())))
+                    continue
+
+                if evitar_ciclo and Amplitud.cayo_en_ciclo(hijo):
+                    print_debug("paso, se ha repetido el antecesor{}".format(
+                        str(hijo.get_estado())))
+                    continue
                 cola.put(hijo)  # Agrega los hijos a la cola
 
-        return None, 'Me perdí'
+        camino = Amplitud.reconstruir_camino(nodo)
+        return camino, 'Me perdí'
 
     @staticmethod
-    def reconstruir_camino(nodo):
+    def reconstruir_camino(nodo: Nodo):
         # Reconstruir el camino desde el nodo solución hasta el nodo raíz
         camino = []
         while nodo is not None:
@@ -32,6 +55,38 @@ class Amplitud:
             nodo = nodo.get_padre()
         # Revertir el camino para que esté en orden desde el nodo raíz hasta la solución
         return camino[::-1]
+
+    @staticmethod
+    def se_ha_devuelto(nodo: Nodo):
+        # El nodo no tiene padre o abuelo
+        if nodo.get_profundidad() <= 1:
+            return False
+
+        abuelo = nodo.get_padre().get_padre()
+        nodo = nodo
+
+        # El nodo es igual a su abuelo, se esta devolviendo
+        if ((str(nodo.get_estado()) == str(abuelo.get_estado()))):
+            return True
+
+        return False
+
+    @staticmethod
+    def cayo_en_ciclo(nodo: Nodo):
+        # El nodo no tiene padre o abuelo
+        if nodo.get_profundidad() <= 1:
+            return False
+
+        antecesor = nodo.get_padre().get_padre()
+        nodo = nodo
+
+        while (antecesor != None):
+            # El nodo es igual a un antecesor, cayo a un ciclo
+            if ((str(nodo.get_estado()) == str(antecesor.get_estado()))):
+                return True
+            antecesor = antecesor.get_padre()
+
+        return False
 
 
 class Test():

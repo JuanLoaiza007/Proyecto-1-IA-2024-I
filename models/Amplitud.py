@@ -1,12 +1,14 @@
-from collections import deque1
+# [Amplitud.py]
 
 # estado(ambiente, agente, operador, meta)
 
+class Amplitud:
+    def __init__(self) -> None:
+        pass
 
-def busqueda_preferente_por_amplitud(estado_problema):
+    def busqueda_preferente_por_amplitud(estado_problema):
 
-    return None
-
+        return None
 
 # def busqueda_preferente_por_amplitud(problema):
 

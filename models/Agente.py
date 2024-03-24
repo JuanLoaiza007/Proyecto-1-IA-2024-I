@@ -1,9 +1,9 @@
-# [Agente_reflejo_simple.py]
+# [Agente.py]
 
 debug = False
 
 
-class agente_reflejo_simple():
+class Agente():
     def __init__(self, coordenadas):
         self.coordenadas = coordenadas
         self.pasos = []

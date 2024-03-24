@@ -3,7 +3,7 @@
 import json
 
 
-class world_tools:
+class World_tools:
     def reconocer_objetos():
         try:
             with open("./data/characters.json", 'r') as archivo_json:

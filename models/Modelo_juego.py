@@ -1,10 +1,10 @@
 # [modelo_juego.py]
 
 import os
-from models.estructura_datos import Operador, Celda, Estado, Problema
-from models.agente_reflejo_simple import agente_reflejo_simple as Agente
-from models.tools.world_tools import world_tools as wtools
-from models.tools.file_selector import File_selector
+from models.Estructuras_datos import Operador, Celda, Estado, Problema
+from models.Agente import Agente as Agente
+from models.tools.World_tools import World_tools as wtools
+from models.tools.File_selector import File_selector
 
 debug = False
 
@@ -15,7 +15,7 @@ def print_debug(message):
         print(new_message)
 
 
-class modelo_juego:
+class Modelo_juego:
     def __init__(self):
         self.camino = None
         self.ambiente = None
@@ -48,12 +48,12 @@ class modelo_juego:
         x_meta, y_meta = wtools.determinar_posicion(
             self.ambiente, self.env_objects_dic['meta'])
 
-        mando = Agente([x_ini, y_ini])
-        self.estado_inicial = Estado(mando.get_x(), mando.get_y())
+        self.estado_inicial = Estado(x_ini, y_ini)
         self.estado_objetivo = Estado(x_meta, y_meta)
 
+        mando = Agente([x_ini, y_ini])
+
         # Eliminar el self.estado_inicial del ambiente
-        print_debug("x_ini: {}, y_ini: {}".format(str(x_ini), str(y_ini)))
         self.ambiente[x_ini][y_ini] = "0"
 
         estado_actual = self.estado_inicial

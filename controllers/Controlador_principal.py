@@ -1,16 +1,16 @@
-# controlador_principal.py
+# [Controlador_principal.py]
 
 import os
 from PyQt5 import QtWidgets, QtGui
-from views.vista_principal import Ui_MainWindow
-from models.modelo_principal import modelo_principal
-from views.sm_dialog_clean import Ui_Dialog as sm_dialog_clean
+from views.Vista_principal import Ui_MainWindow
+from models.Modelo_principal import Modelo_principal
+from views.Sm_dialog_clean import Ui_Dialog as sm_dialog_clean
 
 
-class controlador_principal:
+class Controlador_principal:
     # Funcion para inicializar (general)
     def cargar(self, main_window):
-        self.modelo = modelo_principal()
+        self.modelo = Modelo_principal()
         self.MainWindow = main_window
         self.MainWindow.setMinimumSize(self.MainWindow.minimumSizeHint())
         self.MainWindow.setMaximumSize(16777215, 16777215)

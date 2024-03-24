@@ -1,14 +1,13 @@
-# controlador_principal.py
+# [Controlador_juego.py]
 
-import os
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
-from views.vista_juego import Ui_MainWindow
-from models.modelo_juego import modelo_juego
-from models.tools.temporizador import Temporizador
-from models.tools.dialog import Dialog
+from views.Vista_juego import Ui_MainWindow
+from models.Modelo_juego import Modelo_juego
+from models.tools.Temporizador import Temporizador
+from models.tools.Dialog import Dialog
 
 debug = False
 
@@ -19,10 +18,10 @@ def print_debug(message):
         print(new_message)
 
 
-class controlador_juego:
+class Controlador_juego:
     # Funcion para inicializar (general)
     def cargar(self, main_window):
-        self.modelo = modelo_juego()
+        self.modelo = Modelo_juego()
         self.MainWindow = main_window
         self.MainWindow.setMinimumSize(self.MainWindow.minimumSizeHint())
         self.MainWindow.setMaximumSize(16777215, 16777215)

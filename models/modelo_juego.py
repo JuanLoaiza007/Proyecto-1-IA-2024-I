@@ -1,20 +1,30 @@
+# [modelo_juego.py]
+
 import os
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5 import QtWidgets
-from models.agente_reflejo_simple import agente_reflejo_simple as agente
-from models.tools.world_tools import world_tools
-from models.tools.temporizador import Temporizador
+from models.estructura_datos import Operador, Celda, Estado, Problema
+from models.agente_reflejo_simple import agente_reflejo_simple as Agente
+from models.tools.world_tools import world_tools as wtools
 from models.tools.file_selector import File_selector
-from models.tools.dialog import Dialog
+
+debug = False
+
+
+def print_debug(message):
+    new_message = "modelo_juego.py: " + message
+    if debug:
+        print(new_message)
 
 
 class modelo_juego:
     def __init__(self):
-        self.tabla_juego = None
-        self.debug = False
+        self.camino = None
+        self.ambiente = None
+        self.estado_inicial = None
+        self.estado_objetivo = None
+        self.resultado = "Estoy perdido"
 
-        self.assets_dic = world_tools.reconocer_assets()
-        self.env_objects_dic = world_tools.reconocer_objetos()
+        self.assets_dic = wtools.reconocer_assets()
+        self.env_objects_dic = wtools.reconocer_objetos()
 
         # Personajes
         self.vacio = os.path.abspath(self.assets_dic['vacio'])
@@ -24,76 +34,69 @@ class modelo_juego:
         self.enemigo = os.path.abspath(self.assets_dic['enemigo'])
         self.grogu = os.path.abspath(self.assets_dic['meta'])
 
-    def setTabla(self, tabla,):
-        self.tabla_juego = tabla
-
-    def actualizar_tabla(self, ambiente, coordenadas_agente, coordenadas_meta):
-        for i, fila in enumerate(ambiente):
-            for j, elemento in enumerate(fila):
-
-                item = QtWidgets.QTableWidgetItem()
-                icon = None
-                pixmap = None
-
-                if [i, j] == coordenadas_agente:
-                    pixmap = QPixmap(self.mando)
-                elif [i, j] == coordenadas_meta:
-                    pixmap = QPixmap(self.grogu)
-                else:
-                    if elemento == self.env_objects_dic['vacio']:
-                        pixmap = QPixmap(self.vacio)
-                    elif elemento == self.env_objects_dic['pared']:
-                        pixmap = QPixmap(self.pared)
-                    elif elemento == self.env_objects_dic['enemigo']:
-                        pixmap = QPixmap(self.enemigo)
-                    elif elemento == self.env_objects_dic['nave']:
-                        pixmap = QPixmap(self.nave)
-                    else:
-                        if self.debug:
-                            print(
-                                "modelo_juego.py: actualizar_tabla ha omitido cargar el elemento ", elemento)
-
-                icon = QIcon(pixmap)
-                item.setIcon(icon)
-                self.tabla_juego.setItem(i, j, item)
-
     def iniciar_juego(self):
-
         # Cargar archivo de mundo
         file_selector = File_selector()
         archivo = file_selector.select("data/worlds")
 
         # Generar mundo
-        ambiente = world_tools.generar_mundo(archivo)
+        self.ambiente = wtools.generar_mundo(archivo)
 
-        # Creacion de agente / arbol de busqueda
-        # El agente/arbol debe recibir:
-        # * Las coordenadas iniciales
-        # * El ambiente o mapa (matriz)
-        # * Las coordenadas de la meta
-        mando = agente()
-        mando.set_coordenadas(world_tools.determinar_posicion(
-            ambiente, self.env_objects_dic['agente']))
-        mando.set_ambiente(ambiente, self.env_objects_dic)
-        mando.set_meta(world_tools.determinar_posicion(
-            ambiente, self.env_objects_dic['meta']))
+        # Inicializar estado inicial y estado objetivo
+        x_ini, y_ini = wtools.determinar_posicion(
+            self.ambiente, self.env_objects_dic['agente'])
+        x_meta, y_meta = wtools.determinar_posicion(
+            self.ambiente, self.env_objects_dic['meta'])
 
-        # Limpiar ambiente para mostrar en pantalla
-        ambiente[mando.coordenadas[0]][mando.coordenadas[1]] = 0
-        self.actualizar_tabla(ambiente,
-                              mando.get_coordenadas(), mando.get_meta())
+        mando = Agente([x_ini, y_ini])
+        self.estado_inicial = Estado(mando.get_x(), mando.get_y())
+        self.estado_objetivo = Estado(x_meta, y_meta)
 
-        # Iniciar viaje del agente / arbol de busqueda
-        # La funcion iniciar_viaje se usa para la animacion, debe retornar:
-        # * camino: Una lista de coordenadas que representa los pasos que tomó
-        # * resultado: Un mensaje que indique en que concluyó el camino
-        camino, resultado = mando.iniciar_viaje()
+        # Eliminar el self.estado_inicial del ambiente
+        print_debug("x_ini: {}, y_ini: {}".format(str(x_ini), str(y_ini)))
+        self.ambiente[x_ini][y_ini] = "0"
 
-        # Animacion del camino
-        for paso in camino:
+        estado_actual = self.estado_inicial
+        nuevo_estado = None
 
-            Temporizador.iniciar(2)
-            self.actualizar_tabla(
-                ambiente, paso, mando.get_meta())
+        while True:
+            problema = Problema(
+                estado_actual, self.estado_objetivo, self.ambiente)
 
-        Dialog.mostrar(resultado)
+            print_debug("Coordenadas estado_actual: {}".format(
+                str(estado_actual.get_coordenadas())))
+            if debug:
+                wtools.imprimir_juego(
+                    self.env_objects_dic, self.ambiente, mando.get_coordenadas(), self.estado_objetivo.get_coordenadas())
+
+            if (problema.es_objetivo(estado_actual)):
+                self.resultado = "Lo logré"
+                break
+
+            operadores_validas = problema.generar_operadores(estado_actual)
+
+            if len(operadores_validas) == 0:
+                self.resultado = "Estoy perdido"
+                break
+
+            print_debug("operadores válidas desde el estado actual: {}".format(str([
+                operador.nombre for operador in operadores_validas])))
+
+            operador = mando.tomar_decision(operadores_validas)
+            if operador == None:
+                self.resultado = "No se que hacer en esta situacion :("
+                break
+
+            print_debug("El agente decidió: {}".format(
+                str(operador.get_nombre())))
+
+            nuevo_estado = problema.resultado(estado_actual, operador)
+            mando.set_coordenadas(nuevo_estado.get_coordenadas())
+
+            print_debug("Las coordenadas del agente son: {}".format(
+                str(mando.get_coordenadas())))
+
+            estado_actual = nuevo_estado
+            nuevo_estado = None
+
+        self.camino = mando.get_pasos()

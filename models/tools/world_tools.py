@@ -39,13 +39,18 @@ class world_tools:
                     return [y, x]
 
     def imprimir_juego(env_objects_dic, ambiente, coordenadas_agente, coordenadas_meta):
+        print("world_tools.py in (func)imprimir_juego: coordenadas_agente: {} coordenadas_meta: {}".format(
+            str(coordenadas_agente), str(coordenadas_meta)))
+
         for i, fila in enumerate(ambiente):
             fila_impresa = ""
             for j, elemento in enumerate(fila):
                 if [i, j] == coordenadas_agente:
-                    fila_impresa += env_objects_dic['caracter_agente'] + "\t"
+                    # fila_impresa += env_objects_dic['caracter_agente'] + "\t"
+                    fila_impresa += "2" + "\t"
                 elif [i, j] == coordenadas_meta:
-                    fila_impresa += env_objects_dic['caracter_meta'] + "\t"
+                    # fila_impresa += env_objects_dic['caracter_meta'] + "\t"
+                    fila_impresa += "5" + "\t"
                 else:
                     fila_impresa += str(elemento) + "\t"
             print(fila_impresa)

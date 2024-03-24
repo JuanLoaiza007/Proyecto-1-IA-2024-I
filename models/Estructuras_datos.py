@@ -27,20 +27,6 @@ class Operador:
         return self.dy
 
 
-class Celda:
-    def __init__(self, tipo):
-        """
-        Inicializa una celda
-
-        Args:
-            tipo (str): El tipo de la celda ('pared', 'enemigo', 'nave', 'meta')
-
-        Returns:
-            None
-        """
-        self.tipo = tipo
-
-
 class Estado:
     def __init__(self, x: int, y: int):
         """

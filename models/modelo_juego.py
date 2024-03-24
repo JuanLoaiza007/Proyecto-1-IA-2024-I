@@ -19,6 +19,7 @@ class modelo_juego:
     def __init__(self):
         self.camino = None
         self.ambiente = None
+        self.estado_inicial = None
         self.estado_objetivo = None
         self.resultado = "Estoy perdido"
 
@@ -48,14 +49,14 @@ class modelo_juego:
             self.ambiente, self.env_objects_dic['meta'])
 
         mando = Agente([x_ini, y_ini])
-        estado_inicial = Estado(mando.get_x(), mando.get_y())
+        self.estado_inicial = Estado(mando.get_x(), mando.get_y())
         self.estado_objetivo = Estado(x_meta, y_meta)
 
-        # Eliminar el estado_inicial del ambiente
+        # Eliminar el self.estado_inicial del ambiente
         print_debug("x_ini: {}, y_ini: {}".format(str(x_ini), str(y_ini)))
         self.ambiente[x_ini][y_ini] = "0"
 
-        estado_actual = estado_inicial
+        estado_actual = self.estado_inicial
         nuevo_estado = None
 
         while True:

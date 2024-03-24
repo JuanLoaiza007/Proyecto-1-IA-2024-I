@@ -74,7 +74,7 @@ class controlador_juego:
     def mostrar(self, main_window):
         self.cargar(main_window)
         self.MainWindow.show()
-        Temporizador.iniciar(500)
+        Temporizador.iniciar(1)
         self.iniciar_juego()
 
     def block_focus(self, window):
@@ -91,9 +91,15 @@ class controlador_juego:
         self.animar_juego()
 
     def animar_juego(self):
+        ambiente = self.modelo.ambiente
+        e_inicial = self.modelo.estado_inicial.get_coordenadas()
+        e_objetivo = self.modelo.estado_objetivo.get_coordenadas()
+        self.actualizar_tabla(ambiente, e_inicial, e_objetivo)
+
         for paso in self.modelo.camino:
             Temporizador.iniciar(1500)
             self.actualizar_tabla(
                 self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
 
+        Temporizador.iniciar(100)
         Dialog.mostrar(self.modelo.resultado)

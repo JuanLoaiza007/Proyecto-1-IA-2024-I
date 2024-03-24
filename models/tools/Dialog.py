@@ -1,3 +1,5 @@
+# [Dialog.py]
+
 from views.Sm_dialog_clean import Ui_Dialog as sm_dialog_clean
 from PyQt5 import QtWidgets
 

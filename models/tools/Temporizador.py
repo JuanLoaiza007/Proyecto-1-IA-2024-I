@@ -1,3 +1,5 @@
+# [Temporizador.py]
+
 from PyQt5.QtCore import QTimer, QEventLoop
 
 

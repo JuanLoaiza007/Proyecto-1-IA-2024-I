@@ -3,8 +3,8 @@
 # estado(ambiente, agente, operador, meta)
 
 class Amplitud:
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        return None
 
     def busqueda_preferente_por_amplitud(estado_problema):
 

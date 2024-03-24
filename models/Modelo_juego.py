@@ -1,4 +1,4 @@
-# [modelo_juego.py]
+# [Modelo_juego.py]
 
 import os
 from models.Estructuras_datos import Operador, Celda, Estado, Problema

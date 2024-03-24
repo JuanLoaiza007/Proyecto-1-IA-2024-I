@@ -1,4 +1,4 @@
-# [estructura_datos.py]
+# [Estructura_datos.py]
 
 class Operador:
     def __init__(self, nombre, dx, dy):

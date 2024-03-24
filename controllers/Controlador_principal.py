@@ -59,6 +59,6 @@ class Controlador_principal:
         self.MainWindow.setEnabled(True)
 
     def mostrar_sobre_nosotros(self):
-        from controllers.controlador_sobre_nosotros import controlador_sobre_nosotros
+        from controllers.Controlador_sobre_nosotros import controlador_sobre_nosotros
         self.controlador_sobre_nosotros = controlador_sobre_nosotros()
         self.controlador_sobre_nosotros.mostrar(self.MainWindow)

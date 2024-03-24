@@ -48,7 +48,7 @@ class Estado:
     def get_coordenadas(self):
         return [self.x, self.y]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Muestra informacion sobre las coordenadas.
 
@@ -126,7 +126,7 @@ class Problema:
         """
         return estado.get_coordenadas() == self.estado_objetivo.get_coordenadas()
 
-    def generar_operadores(self, estado: Estado) -> "list[Operador]":
+    def generar_operadores(self) -> "list[Operador]":
         """
         Genera las operadores validas para el estado.
 
@@ -137,6 +137,7 @@ class Problema:
             operadores ([Operador, Operador,... Operador]): Un vector de operadores.
         """
         operadores = []
+        estado = self.estado_inicial
         # OJO: Aquí hay una corrección para los indices de la matriz,
         # arriba es (0, -1) y así sucesivamente.
         for dy, dx, operador_nombre in [(0, -1, 'arriba'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (1, 0, 'derecha')]:
@@ -195,7 +196,12 @@ class Nodo:
         self.hijos: "list[Nodo]" = []
 
     def __str__(self) -> str:
-        return self.estado
+        padre = None
+        if self.padre != None:
+            padre = self.padre.get_estado()
+        mensaje = "Estado: {}, padre: {}, operador efectuado: {}, profundidad: {}, costo acumulado: {}".format(
+            str(self.estado), str(padre), str(self.operador), str(self.profundidad), str(self.costo_acumulado))
+        return mensaje
 
     def get_estado(self):
         return self.estado
@@ -230,8 +236,7 @@ class Nodo:
     def expandir(self, problema: Problema):
         # Limpiar hijos por si las moscas
         self.hijos = []
-
-        operadores = problema.generar_operadores(self.estado)
+        operadores = problema.generar_operadores()
 
         if len(operadores) == 0:
             return self.hijos
@@ -250,3 +255,46 @@ class Nodo:
                 self.hijos.append(hijo)
 
         return self.hijos
+
+
+class Test():
+    @staticmethod
+    def start():
+        from models.tools.World_tools import World_tools as wtools
+        from models.tools.File_selector import File_selector
+
+        env_objects_dic = wtools.reconocer_objetos()
+
+        # Cargar archivo de mundo
+        file_selector = File_selector()
+        archivo = file_selector.select("data/worlds")
+
+        ambiente = wtools.generar_mundo(archivo)
+
+        # Inicializar estado inicial y estado objetivo
+        x_ini, y_ini = wtools.determinar_posicion(
+            ambiente, env_objects_dic['agente'])
+        x_meta, y_meta = wtools.determinar_posicion(
+            ambiente, env_objects_dic['meta'])
+
+        # Inicializar estados
+        estado_inicial = Estado(x_ini, y_ini)
+        estado_objetivo = Estado(x_meta, y_meta)
+
+        # Eliminar el self.estado_inicial del ambiente
+        ambiente[x_ini][y_ini] = "0"
+
+        problema = Problema(estado_inicial, estado_objetivo, ambiente)
+
+        # Creando Nodo Padre
+        nodo = Nodo()
+        nodo.set_estado(estado_inicial)
+        nodo.set_profundidad(0)
+        nodo.set_costo_acumulado(0)
+        print("Nodo padre: {}\n".format(nodo))
+
+        # Creando nodos hijos
+        print("Hijos:\n")
+        hijos: "list[Nodo]" = nodo.expandir(problema)
+        for hijo in hijos:
+            print(hijo)

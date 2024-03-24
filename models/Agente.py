@@ -79,7 +79,7 @@ class Agente():
                 wtools.imprimir_juego(
                     self.env_objects_dic, ambiente, self.get_coordenadas(), estado_objetivo.get_coordenadas())
 
-            if (problema.es_objetivo(estado_actual)):
+            if (problema.es_estado_objetivo()):
                 self.resultado = "Lo logré"
                 break
 

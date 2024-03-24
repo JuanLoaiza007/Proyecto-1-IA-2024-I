@@ -288,7 +288,7 @@ class Test():
 
         # Creando Nodo Padre
         nodo = Nodo()
-        nodo.set_estado(estado_inicial)
+        nodo.set_estado(problema.get_estado_inicial())
         nodo.set_profundidad(0)
         nodo.set_costo_acumulado(0)
         print("Nodo padre: {}\n".format(nodo))

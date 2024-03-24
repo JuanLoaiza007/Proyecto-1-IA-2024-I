@@ -74,7 +74,7 @@ class controlador_juego:
     def mostrar(self, main_window):
         self.cargar(main_window)
         self.MainWindow.show()
-        Temporizador.iniciar(1)
+        Temporizador.iniciar(500)
         self.iniciar_juego()
 
     def block_focus(self, window):

@@ -83,7 +83,7 @@ class Agente():
                 self.resultado = "Lo logré"
                 break
 
-            operadores_validas = problema.generar_operadores(estado_actual)
+            operadores_validas = problema.generar_operadores()
 
             if len(operadores_validas) == 0:
                 self.resultado = "Estoy perdido"

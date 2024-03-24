@@ -1,12 +1,12 @@
 # [estructura_datos.py]
 
-class Accion:
+class Operador:
     def __init__(self, nombre, dx, dy):
         """
-        Inicializa una accion
+        Inicializa un operador
 
         Args:
-            nombre (str): El nombre de la accion.
+            nombre (str): El nombre del operador.
             dx (int): El cambio de coordenada en x.
             dy (int): El cambio de coordenada en y.
 
@@ -123,38 +123,38 @@ class Problema:
         """
         return estado.get_coordenadas() == self.estado_objetivo.get_coordenadas()
 
-    def generar_acciones(self, estado):
+    def generar_operadores(self, estado):
         """
-        Genera las acciones validas para el estado.
+        Genera las operadores validas para el estado.
 
         Args:
-            estado (Estado): El estado del que se quiere generar acciones
+            estado (Estado): El estado del que se quiere generar operadores
 
         Returns:
-            acciones ([Accion, Accion,... Accion]): Un vector de acciones.
+            operadores ([Operador, Operador,... Operador]): Un vector de operadores.
         """
-        acciones = []
+        operadores = []
         # OJO: Aquí hay una corrección para los indices de la matriz,
         # arriba es (0, -1) y así sucesivamente.
-        for dy, dx, accion_nombre in [(0, -1, 'arriba'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (1, 0, 'derecha')]:
+        for dy, dx, operador_nombre in [(0, -1, 'arriba'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (1, 0, 'derecha')]:
             nuevo_estado = Estado(estado.x + dx, estado.y + dy)
             if self.es_valido(nuevo_estado):
-                acciones.append(Accion(accion_nombre, dx, dy))
-        return acciones
+                operadores.append(Operador(operador_nombre, dx, dy))
+        return operadores
 
-    def resultado(self, estado, accion):
+    def resultado(self, estado, operador):
         """
         Genera un nuevo estado aplicando un operador sobre el actual.
 
         Args:
             estado (Estado): El estado actual.
-            accion (Accion): La accion que se quiere aplicar al estado.
+            operador (Operador): El operador que se quiere aplicar al estado.
 
         Returns:
-            nuevo_estado (Estado): Un nuevo estado que surge de aplicar la accion al estado actual.
+            nuevo_estado (Estado): Un nuevo estado que surge de aplicar el operador al estado actual.
             None si el nuevo estado no cumple con las reglas de juego.
         """
-        nuevo_estado = Estado(estado.x + accion.dx, estado.y + accion.dy)
+        nuevo_estado = Estado(estado.x + operador.dx, estado.y + operador.dy)
         if self.es_valido(nuevo_estado):
             return nuevo_estado
         else:
@@ -223,6 +223,7 @@ class Nodo:
     def expandir(self):
 
         hijos = []
+
         # algun for para las opciones válidas
         # hijo = Nodo()
         # hijo.set_estado(nuevo_estado)

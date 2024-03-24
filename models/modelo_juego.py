@@ -1,7 +1,7 @@
 # [modelo_juego.py]
 
 import os
-from models.estructura_datos import Accion, Celda, Estado, Problema
+from models.estructura_datos import Operador, Celda, Estado, Problema
 from models.agente_reflejo_simple import agente_reflejo_simple as Agente
 from models.tools.world_tools import world_tools as wtools
 from models.tools.file_selector import File_selector
@@ -72,24 +72,24 @@ class modelo_juego:
                 self.resultado = "Lo logré"
                 break
 
-            acciones_validas = problema.generar_acciones(estado_actual)
+            operadores_validas = problema.generar_operadores(estado_actual)
 
-            if len(acciones_validas) == 0:
+            if len(operadores_validas) == 0:
                 self.resultado = "Estoy perdido"
                 break
 
-            print_debug("Acciones válidas desde el estado actual: {}".format(str([
-                accion.nombre for accion in acciones_validas])))
+            print_debug("operadores válidas desde el estado actual: {}".format(str([
+                operador.nombre for operador in operadores_validas])))
 
-            accion = mando.tomar_decision(acciones_validas)
-            if accion == None:
+            operador = mando.tomar_decision(operadores_validas)
+            if operador == None:
                 self.resultado = "No se que hacer en esta situacion :("
                 break
 
             print_debug("El agente decidió: {}".format(
-                str(accion.get_nombre())))
+                str(operador.get_nombre())))
 
-            nuevo_estado = problema.resultado(estado_actual, accion)
+            nuevo_estado = problema.resultado(estado_actual, operador)
             mando.set_coordenadas(nuevo_estado.get_coordenadas())
 
             print_debug("Las coordenadas del agente son: {}".format(

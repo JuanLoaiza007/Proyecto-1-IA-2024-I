@@ -61,16 +61,23 @@ class modelo_juego:
         while True:
             problema = Problema(
                 estado_actual, self.estado_objetivo, self.ambiente)
+
             print_debug("Coordenadas estado_actual: {}".format(
                 str(estado_actual.get_coordenadas())))
+            if debug:
+                wtools.imprimir_juego(
+                    self.env_objects_dic, self.ambiente, mando.get_coordenadas(), self.estado_objetivo.get_coordenadas())
+
             if (problema.es_objetivo(estado_actual)):
                 self.resultado = "Lo logré"
                 break
 
             acciones_validas = problema.generar_acciones(estado_actual)
+
             if len(acciones_validas) == 0:
                 self.resultado = "Estoy perdido"
                 break
+
             print_debug("Acciones válidas desde el estado actual: {}".format(str([
                 accion.nombre for accion in acciones_validas])))
 
@@ -78,11 +85,13 @@ class modelo_juego:
             if accion == None:
                 self.resultado = "No se que hacer en esta situacion :("
                 break
+
             print_debug("El agente decidió: {}".format(
                 str(accion.get_nombre())))
 
             nuevo_estado = problema.resultado(estado_actual, accion)
             mando.set_coordenadas(nuevo_estado.get_coordenadas())
+
             print_debug("Las coordenadas del agente son: {}".format(
                 str(mando.get_coordenadas())))
 

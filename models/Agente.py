@@ -34,15 +34,38 @@ class Agente():
     def get_y(self):
         return self.coordenadas[1]
 
-    def tomar_decision(self, acciones_validas):
-        for accion in acciones_validas:
-            if accion.get_nombre() == "arriba":
-                return accion
-            elif accion.get_nombre() == "derecha":
-                return accion
+    def tomar_decision(self, operadores_validos):
+        """
+        A traves de sus criterios escoge un operador entre los posibles.
+
+        Args:
+            operadores_validos ([Operador, Operador,.... Operador]): Una lista de operadores aplicables.
+
+        Returns:
+            operador (Operador): El operador que escoge el Agente dados los posibles
+            None: Si no puede escoger entre los operadores disponibles.
+        """
+        for operador in operadores_validos:
+            if operador.get_nombre() == "arriba":
+                return operador
+            elif operador.get_nombre() == "derecha":
+                return operador
         return None
 
     def iniciar_viaje(self, estado_inicial, estado_objetivo, ambiente):
+        """
+        A traves de su proceso interno escoge el camino a seguir.
+
+        Args:
+            estado_inicial (Estado): El estado inicial o actual del problema.
+            estado_objetivo (Estado): El objetivo deseado del problema.
+            ambiente ([[], [],... []]]): Una matriz que representa al ambiente, 
+            debe haberse eliminado al Agente
+
+        Returns:
+            pasos ([(int, int), (int, int),... (int, int)]): Las coordendas que pasó.
+            resultado (str): Un informe sobre el estado final del problema (Que pasó con el agente?)
+        """
         estado_actual = estado_inicial
         nuevo_estado = None
 

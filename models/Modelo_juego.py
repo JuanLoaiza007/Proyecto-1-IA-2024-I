@@ -1,7 +1,7 @@
 # [Modelo_juego.py]
 
 import os
-from models.Estructuras_datos import Operador, Celda, Estado, Problema
+from models.Estructuras_datos import Estado
 from models.Agente import Agente as Agente
 from models.tools.World_tools import World_tools as wtools
 from models.tools.File_selector import File_selector
@@ -21,7 +21,7 @@ class Modelo_juego:
         self.ambiente = None
         self.estado_inicial = None
         self.estado_objetivo = None
-        self.resultado = "Estoy perdido"
+        self.resultado = None
 
         self.assets_dic = wtools.reconocer_assets()
         self.env_objects_dic = wtools.reconocer_objetos()
@@ -51,52 +51,12 @@ class Modelo_juego:
         self.estado_inicial = Estado(x_ini, y_ini)
         self.estado_objetivo = Estado(x_meta, y_meta)
 
+        # Inicializar el agente
         mando = Agente([x_ini, y_ini])
 
         # Eliminar el self.estado_inicial del ambiente
         self.ambiente[x_ini][y_ini] = "0"
 
-        estado_actual = self.estado_inicial
-        nuevo_estado = None
-
-        while True:
-            problema = Problema(
-                estado_actual, self.estado_objetivo, self.ambiente)
-
-            print_debug("Coordenadas estado_actual: {}".format(
-                str(estado_actual.get_coordenadas())))
-            if debug:
-                wtools.imprimir_juego(
-                    self.env_objects_dic, self.ambiente, mando.get_coordenadas(), self.estado_objetivo.get_coordenadas())
-
-            if (problema.es_objetivo(estado_actual)):
-                self.resultado = "Lo logré"
-                break
-
-            operadores_validas = problema.generar_operadores(estado_actual)
-
-            if len(operadores_validas) == 0:
-                self.resultado = "Estoy perdido"
-                break
-
-            print_debug("operadores válidas desde el estado actual: {}".format(str([
-                operador.nombre for operador in operadores_validas])))
-
-            operador = mando.tomar_decision(operadores_validas)
-            if operador == None:
-                self.resultado = "No se que hacer en esta situacion :("
-                break
-
-            print_debug("El agente decidió: {}".format(
-                str(operador.get_nombre())))
-
-            nuevo_estado = problema.resultado(estado_actual, operador)
-            mando.set_coordenadas(nuevo_estado.get_coordenadas())
-
-            print_debug("Las coordenadas del agente son: {}".format(
-                str(mando.get_coordenadas())))
-
-            estado_actual = nuevo_estado
-            nuevo_estado = None
-
-        self.camino = mando.get_pasos()
+        # Iniciar el viaje del Agente/Arbol y obtener los resultados
+        self.camino, self.resultado = mando.iniciar_viaje(
+            self.estado_inicial, self.estado_objetivo, self.ambiente)

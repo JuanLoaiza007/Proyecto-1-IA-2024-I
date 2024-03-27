@@ -2,6 +2,7 @@
 
 import os
 from models.trees.Amplitud import *
+from models.trees.Profundidad import *
 from models.shared.Estructuras_datos import Estado
 from models.shared.tools.World_tools import World_tools as wtools
 from models.shared.tools.File_selector import File_selector
@@ -61,6 +62,8 @@ class Modelo_juego:
     def iniciar_juego(self):
         self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
             self.problema_inicial)
+        #self.camino, self.resultado = Profundidad.busqueda_preferente_por_profundidad(
+        #    self.problema_inicial)
 
         print_debug("Camino es {}\nResultado es {}\n".format(
             str(self.camino), str(self.resultado)))

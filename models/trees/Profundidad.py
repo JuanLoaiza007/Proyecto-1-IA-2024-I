@@ -1,6 +1,5 @@
-# [Amplitud.py]
+# [Profundidad.py]
 
-from collections import deque
 from models.shared.Estructuras_datos import *
 
 evitar_devolverse = True

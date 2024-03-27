@@ -142,7 +142,8 @@ class Problema:
         estado = self.estado_inicial
         # OJO: Aquí hay una corrección para los indices de la matriz,
         # arriba es (0, -1) y así sucesivamente.
-        for dy, dx, operador_nombre in [(0, -1, 'arriba'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (1, 0, 'derecha')]:
+        #En el árbol de búsqueda el orden de los operadores sería arriba, izquierda, abajo, derecha
+        for dy, dx, operador_nombre in [(1, 0, 'derecha'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (0, -1, 'arriba')]:
             nuevo_estado = Estado(estado.x + dx, estado.y + dy)
             if self.es_estado_valido(nuevo_estado):
                 operadores.append(Operador(operador_nombre, dx, dy))

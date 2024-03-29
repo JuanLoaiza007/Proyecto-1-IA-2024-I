@@ -1,5 +1,6 @@
 # [Controlador_juego.py]
 
+import os
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QSize
@@ -8,14 +9,29 @@ from views.Vista_juego import Ui_MainWindow
 from models.Modelo_juego import Modelo_juego
 from models.shared.tools.Temporizador import Temporizador
 from models.shared.tools.Dialog import Dialog
+from PyQt5.QtCore import QThread
 
-debug = False
+debug = True
 
 
 def print_debug(message):
     new_message = "controlador_juego.py: " + message
     if debug:
         print(new_message)
+
+
+class WorkerThread(QThread):
+    """
+    Clase de Hilo Trabajador para ejecutar procesamiento en segundo plano y conservar la ventana recibiendo eventos.
+    """
+
+    def __init__(self, modelo: Modelo_juego):
+
+        super().__init__()
+        self.modelo = modelo
+
+    def run(self):
+        self.modelo.iniciar_juego()
 
 
 class Controlador_juego:
@@ -28,6 +44,16 @@ class Controlador_juego:
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
         self.inicializar_tabla()
+
+        # Hilo de procesamiento
+        self.hilo_procesamiento: WorkerThread = None
+
+        # Evento para cierre de programa
+        self.MainWindow.destroyed.connect(self.cerrar_ventana)
+
+    def cerrar_ventana(self):
+        self.hilo_procesamiento.exit()
+        os._exit(0)
 
     def inicializar_tabla(self):
         self.ui.table_mapa.setRowCount(10)
@@ -96,14 +122,18 @@ class Controlador_juego:
             "Mando esta pensando... *guiño guiño*")
 
         Temporizador.iniciar(100)
-        self.modelo.iniciar_juego()
+        # Hilo para mantener la interfaz atenta
+        self.hilo_procesamiento = WorkerThread(self.modelo)
+        # Eventos que requieren los calculos del hilo
+        self.hilo_procesamiento.finished.connect(
+            self.animar_juego)
+        # Inicia las tareas del hilo de la funcion run()
+        self.hilo_procesamiento.start()
+
+    def animar_juego(self):
         self.ui.lbl_estado_agente.setText(
             "Mando ha tomado una decision")
 
-        Temporizador.iniciar(100)
-        self.animar_juego()
-
-    def animar_juego(self):
         for paso in self.modelo.camino:
             Temporizador.iniciar(600)
             self.actualizar_tabla(

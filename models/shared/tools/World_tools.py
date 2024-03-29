@@ -37,6 +37,7 @@ class World_tools:
             for x, elemento in enumerate(fila):
                 if elemento == numero:
                     return [y, x]
+        return None
 
     def imprimir_juego(env_objects_dic, ambiente, coordenadas_agente, coordenadas_meta):
         print("world_tools.py in (func)imprimir_juego: coordenadas_agente: {} coordenadas_meta: {}".format(
@@ -55,3 +56,37 @@ class World_tools:
                     fila_impresa += str(elemento) + "\t"
             print(fila_impresa)
         print()
+
+    def comprobar_mundo(archivo):
+        mundo = World_tools.generar_mundo(archivo)
+        objetos = World_tools.reconocer_objetos()
+
+        agente = World_tools.determinar_posicion(
+            mundo, objetos['agente'])
+        meta = World_tools.determinar_posicion(
+            mundo, objetos['meta'])
+
+        elemento_fuera_de_rango = False
+        try:
+            for fila in mundo:
+                for elemento in fila:
+                    if not (0 <= int(elemento) <= 5):
+                        elemento_fuera_de_rango = True
+                        break
+                if elemento_fuera_de_rango:
+                    break
+        except ValueError:
+            elemento_fuera_de_rango = True
+
+        errores = []
+        if agente == None:
+            errores.append("Se requiere un agente representado por el numero {}".format(
+                str(objetos['agente'])))
+        if meta == None:
+            errores.append("Se requiere una meta representada por el numero {}".format(
+                str(objetos['meta'])))
+        if elemento_fuera_de_rango:
+            errores.append(
+                "El archivo debe tener solo los numeros: 0, 1, 2, 3, 4 y 5")
+
+        return errores

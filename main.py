@@ -1,6 +1,6 @@
 # [main.py]
 
-from controllers.Controlador_juego import Controlador_juego as Controlador
+from controllers.Controlador_principal import Controlador_principal as Controlador
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDesktopWidget
 import sys
 

@@ -485,7 +485,7 @@ class Ui_Dialog(object):
         self.lbl_title.setText(_translate("Dialog", "TextLabel"))
         self.lbl_title.setProperty("class", _translate("Dialog", "h3 color-danger"))
         self.lbl_body.setText(_translate("Dialog", "TextLabel"))
-        self.lbl_body.setProperty("class", _translate("Dialog", "h6"))
+        self.lbl_body.setProperty("class", _translate("Dialog", "h5"))
         self.btn_aceptar.setText(_translate("Dialog", "Aceptar"))
         self.btn_aceptar.setProperty("class", _translate("Dialog", "btn-danger"))
 

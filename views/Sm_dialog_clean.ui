@@ -506,7 +506,7 @@ QLabel {
          <bool>true</bool>
         </property>
         <property name="class" stdset="0">
-         <string>h6</string>
+         <string>h5</string>
         </property>
        </widget>
       </item>

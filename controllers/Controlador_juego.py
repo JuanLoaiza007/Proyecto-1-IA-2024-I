@@ -60,7 +60,6 @@ class Controlador_juego:
 
         # Hilo de procesamiento
         self.hilo_procesamiento: WorkerThread = None
-        self.hilo_animacion: WorkerThread = None
 
         # Evento para cierre de programa
         self.MainWindow.destroyed.connect(self.cerrar_ventana)
@@ -73,8 +72,6 @@ class Controlador_juego:
         try:
             if self.hilo_procesamiento != None and self.hilo_procesamiento.isRunning():
                 self.hilo_procesamiento.exit()
-            if self.hilo_animacion != None and self.hilo_animacion.isRunning():
-                self.hilo_animacion.exit()
 
         except RuntimeError:
             print_debug(
@@ -228,8 +225,7 @@ class Controlador_juego:
             str(self.modelo.resultado))
         self.habilitar_botones_footer()
 
-        self.hilo_animacion = WorkerThread(self.reproducir_animacion)
-        self.hilo_animacion.start()
+        self.reproducir_animacion()
 
     def volver(self):
         self.cerrar_procesamientos()

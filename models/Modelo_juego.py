@@ -68,11 +68,12 @@ class Modelo_juego:
         if self.algoritmo_actual == "profundidad":
             self.camino, self.resultado = Profundidad.busqueda_preferente_por_profundidad(
                 self.problema_inicial)
-            print_debug("Se usará el algoritmo profundidad")
+            print_debug("He decidido usar el algoritmo profundidad")
         else:
             self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
                 self.problema_inicial)
-            print_debug("Se usará el algoritmo amplitud")
+            print_debug(
+                "ATENCION: Por DEFAULT he decidido usar el algoritmo amplitud")
 
         print_debug("Camino es {}\nResultado es {}\n".format(
             str(self.camino), str(self.resultado)))

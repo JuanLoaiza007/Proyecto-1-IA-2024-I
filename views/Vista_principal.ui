@@ -588,7 +588,19 @@ QLabel {
              <string/>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item alignment="Qt::AlignVCenter">
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>20</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
               <widget class="QFrame" name="frame_2">
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
@@ -600,9 +612,6 @@ QLabel {
                 <string/>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
-                <property name="spacing">
-                 <number>10</number>
-                </property>
                 <item>
                  <widget class="QLabel" name="lbl_tipo_busqueda">
                   <property name="minimumSize">
@@ -702,6 +711,16 @@ QLabel {
                  </widget>
                 </item>
                 <item>
+                 <widget class="QLabel" name="lbl_estado_mundo">
+                  <property name="text">
+                   <string>text_sample</string>
+                  </property>
+                  <property name="class" stdset="0">
+                   <string>h6 color-danger</string>
+                  </property>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignLeft">
                  <widget class="QFrame" name="frame">
                   <property name="maximumSize">
                    <size>
@@ -731,7 +750,7 @@ QLabel {
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
-                   <item>
+                   <item alignment="Qt::AlignLeft">
                     <widget class="QPushButton" name="btn_cargar_mundo">
                      <property name="minimumSize">
                       <size>
@@ -756,7 +775,7 @@ QLabel {
                      </property>
                     </widget>
                    </item>
-                   <item>
+                   <item alignment="Qt::AlignRight">
                     <widget class="QPushButton" name="btn_iniciar">
                      <property name="minimumSize">
                       <size>

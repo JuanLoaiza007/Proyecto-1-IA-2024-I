@@ -5,7 +5,6 @@ from models.trees.Amplitud import *
 from models.trees.Profundidad import *
 from models.shared.Estructuras_datos import Estado
 from models.shared.tools.World_tools import World_tools as wtools
-from models.shared.tools.File_selector import File_selector
 
 debug = True
 
@@ -23,7 +22,11 @@ class Modelo_juego:
         self.estado_inicial = None
         self.estado_objetivo = None
         self.resultado = None
+        self.reporte = None
         self.problema_inicial = None
+        self.algoritmo_actual = None
+        self.algoritmos_disponibles = [
+            "amplitud", "costo", "profundidad", "avara", "a*"]
 
         self.assets_dic = wtools.reconocer_assets()
         self.env_objects_dic = wtools.reconocer_objetos()
@@ -36,14 +39,16 @@ class Modelo_juego:
         self.enemigo = os.path.abspath(self.assets_dic['enemigo'])
         self.grogu = os.path.abspath(self.assets_dic['meta'])
 
+    def cargar_ambiente(self, ambiente):
+        self.ambiente = ambiente
+
+    def cargar_algorimo(self, algoritmo):
+        if algoritmo in self.algoritmos_disponibles:
+            self.algoritmo_actual = algoritmo
+            return True
+        return False
+
     def preparar_juego(self):
-        # Cargar archivo de mundo
-        file_selector = File_selector()
-        archivo = file_selector.select("data/worlds")
-
-        # Generar mundo
-        self.ambiente = wtools.generar_mundo(archivo)
-
         # Inicializar estado inicial y estado objetivo
         x_ini, y_ini = wtools.determinar_posicion(
             self.ambiente, self.env_objects_dic['agente'])
@@ -60,10 +65,16 @@ class Modelo_juego:
                                          self.estado_objetivo, self.ambiente)
 
     def iniciar_juego(self):
-        self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
-            self.problema_inicial)
-        #self.camino, self.resultado = Profundidad.busqueda_preferente_por_profundidad(
-        #    self.problema_inicial)
+
+        if self.algoritmo_actual == "profundidad":
+            self.camino, self.resultado, self.reporte = Profundidad.busqueda_preferente_por_profundidad(
+                self.problema_inicial)
+            print_debug("He decidido usar el algoritmo profundidad")
+        else:
+            self.camino, self.resultado, self.reporte = Amplitud.busqueda_preferente_por_amplitud(
+                self.problema_inicial)
+            print_debug(
+                "ATENCION: Por DEFAULT he decidido usar el algoritmo amplitud")
 
         print_debug("Camino es {}\nResultado es {}\n".format(
             str(self.camino), str(self.resultado)))

@@ -739,6 +739,9 @@ QLabel {
                        <height>40</height>
                       </size>
                      </property>
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
                      <property name="text">
                       <string>Cargar Mundo</string>
                      </property>
@@ -760,6 +763,9 @@ QLabel {
                        <width>130</width>
                        <height>40</height>
                       </size>
+                     </property>
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
                      </property>
                      <property name="text">
                       <string>Iniciar</string>
@@ -936,6 +942,9 @@ QLabel {
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QPushButton" name="btn_sobre">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Sobre</string>
             </property>

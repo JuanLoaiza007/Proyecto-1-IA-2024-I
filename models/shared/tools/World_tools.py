@@ -80,13 +80,13 @@ class World_tools:
 
         errores = []
         if agente == None:
-            errores.append("Se requiere un agente representado por el numero {}".format(
+            errores.append("Falta un agente (Numero {})".format(
                 str(objetos['agente'])))
         if meta == None:
-            errores.append("Se requiere una meta representada por el numero {}".format(
+            errores.append("Falta una meta (Numero {})".format(
                 str(objetos['meta'])))
         if elemento_fuera_de_rango:
             errores.append(
-                "El archivo debe tener solo los numeros: 0, 1, 2, 3, 4 y 5")
+                "El archivo debe usar solo numeros del 0 al 5")
 
         return errores

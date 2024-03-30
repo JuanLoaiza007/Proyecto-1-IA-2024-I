@@ -240,5 +240,5 @@ class Controlador_juego:
 
     def mostrar_reporte(self):
         self.little_block_focus()
-        Dialog.mostrar_dialogo("Reporte", str(self.modelo.resultado))
+        Dialog.mostrar_dialogo("Reporte", str(self.modelo.reporte))
         self.unblock_focus()

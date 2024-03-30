@@ -22,6 +22,7 @@ class Modelo_juego:
         self.estado_inicial = None
         self.estado_objetivo = None
         self.resultado = None
+        self.reporte = None
         self.problema_inicial = None
         self.algoritmo_actual = None
         self.algoritmos_disponibles = [
@@ -66,11 +67,11 @@ class Modelo_juego:
     def iniciar_juego(self):
 
         if self.algoritmo_actual == "profundidad":
-            self.camino, self.resultado = Profundidad.busqueda_preferente_por_profundidad(
+            self.camino, self.resultado, self.reporte = Profundidad.busqueda_preferente_por_profundidad(
                 self.problema_inicial)
             print_debug("He decidido usar el algoritmo profundidad")
         else:
-            self.camino, self.resultado = Amplitud.busqueda_preferente_por_amplitud(
+            self.camino, self.resultado, self.reporte = Amplitud.busqueda_preferente_por_amplitud(
                 self.problema_inicial)
             print_debug(
                 "ATENCION: Por DEFAULT he decidido usar el algoritmo amplitud")

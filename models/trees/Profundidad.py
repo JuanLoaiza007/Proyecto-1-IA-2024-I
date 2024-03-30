@@ -1,5 +1,6 @@
 # [Profundidad.py]
 
+import time
 from models.shared.Estructuras_datos import *
 
 evitar_devolverse = True
@@ -17,6 +18,11 @@ def print_debug(message):
 class Profundidad:
     @staticmethod
     def busqueda_preferente_por_profundidad(problema: Problema):
+        nodos_expandidos = 0
+        profundidad = 0
+        reporte = ""
+
+        tiempo_inicio = time.time()
         pila = list()
         pila.append(Nodo(problema))  # Agrega el nodo raíz a la cola
 
@@ -25,11 +31,22 @@ class Profundidad:
 
             if nodo.es_meta():
                 camino = Profundidad.reconstruir_camino(nodo)
-                return camino, 'Encontré a grogu'
+                reporte = Profundidad.generar_reporte(
+                    nodos_expandidos, profundidad, tiempo_inicio)
+
+                return camino, 'Encontré a grogu', reporte
 
             # Expande el nodo y obtiene sus hijos
             hijos: "list[Nodo]" = nodo.expandir()
+
+            # Actualiza cantidad de nodos expandidos
+            nodos_expandidos += 1
+
             for hijo in hijos:
+
+                # Actualiza profundidad
+                if profundidad < hijo.get_profundidad():
+                    profundidad = hijo.get_profundidad()
 
                 if evitar_devolverse and Profundidad.se_ha_devuelto(hijo):
                     print_debug("paso, queria ir a {} pero hace dos pasos estuve en {}".format(
@@ -43,7 +60,10 @@ class Profundidad:
                 pila.append(hijo)  # Agrega los hijos a la cola
 
         camino = Profundidad.reconstruir_camino(nodo)
-        return camino, 'Me perdí'
+        reporte = Profundidad.generar_reporte(
+            nodos_expandidos, profundidad, tiempo_inicio)
+
+        return camino, 'Me perdí', reporte
 
     @staticmethod
     def reconstruir_camino(nodo: Nodo):
@@ -87,6 +107,12 @@ class Profundidad:
             antecesor = antecesor.get_padre()
 
         return False
+
+    @staticmethod
+    def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio):
+        tiempo_computo = round(time.time() - tiempo_inicio, 6)
+        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s".format(
+            str(nodos_expandidos), str(profundidad), str(tiempo_computo))
 
 
 class Test():

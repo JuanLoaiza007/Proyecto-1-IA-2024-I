@@ -476,17 +476,17 @@ QLabel {
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="header">
       <property name="minimumSize">
        <size>
         <width>800</width>
-        <height>80</height>
+        <height>70</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>80</height>
+        <height>70</height>
        </size>
       </property>
       <property name="frameShape">
@@ -499,7 +499,7 @@ QLabel {
        <item>
         <widget class="QLabel" name="lbl_titulo">
          <property name="text">
-          <string>Juego</string>
+          <string>text_sample</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -513,7 +513,7 @@ QLabel {
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="frame_2">
+     <widget class="QFrame" name="body">
       <property name="minimumSize">
        <size>
         <width>800</width>
@@ -526,240 +526,118 @@ QLabel {
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QFrame" name="frame_4">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QTableWidget" name="table_mapa">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>100</width>
-           <height>400</height>
+           <width>460</width>
+           <height>460</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>150</width>
-           <height>16777215</height>
+           <width>460</width>
+           <height>460</height>
           </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>1</pointsize>
+          </font>
+         </property>
+         <property name="cursor" stdset="0">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Plain</enum>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_5">
-         <property name="minimumSize">
-          <size>
-           <width>500</width>
-           <height>400</height>
-          </size>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
          </property>
-         <property name="class" stdset="0">
-          <string/>
+         <property name="autoScroll">
+          <bool>false</bool>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="QFrame" name="frame_11">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QTableWidget" name="table_mapa">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>850</width>
-                 <height>790</height>
-                </size>
-               </property>
-               <property name="sizeIncrement">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>1</pointsize>
-                </font>
-               </property>
-               <property name="cursor" stdset="0">
-                <cursorShape>ArrowCursor</cursorShape>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="verticalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-               </property>
-               <property name="autoScroll">
-                <bool>false</bool>
-               </property>
-               <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
-               </property>
-               <property name="tabKeyNavigation">
-                <bool>false</bool>
-               </property>
-               <property name="showDropIndicator" stdset="0">
-                <bool>false</bool>
-               </property>
-               <property name="dragDropOverwriteMode">
-                <bool>false</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::NoSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectItems</enum>
-               </property>
-               <property name="textElideMode">
-                <enum>Qt::ElideNone</enum>
-               </property>
-               <property name="showGrid">
-                <bool>true</bool>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="rowCount">
-                <number>0</number>
-               </property>
-               <attribute name="horizontalHeaderVisible">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_6">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>400</height>
-          </size>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
+         <property name="tabKeyNavigation">
+          <bool>false</bool>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="dragDropOverwriteMode">
+          <bool>false</bool>
          </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::NoSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectItems</enum>
+         </property>
+         <property name="textElideMode">
+          <enum>Qt::ElideNone</enum>
+         </property>
+         <property name="showGrid">
+          <bool>true</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="cornerButtonEnabled">
+          <bool>false</bool>
+         </property>
+         <property name="rowCount">
+          <number>0</number>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="frame_3">
+     <widget class="QFrame" name="footer">
       <property name="minimumSize">
        <size>
         <width>800</width>
-        <height>60</height>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>60</height>
+        <height>50</height>
        </size>
       </property>
       <property name="frameShape">
@@ -768,82 +646,71 @@ QLabel {
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
+      <property name="class" stdset="0">
+       <string>background-primary</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QFrame" name="frame_7">
+        <widget class="QPushButton" name="btn_volver">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>20</height>
+           <width>145</width>
+           <height>34</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>40</height>
+           <width>145</width>
+           <height>34</height>
           </size>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+         <property name="text">
+          <string>Volver</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="class" stdset="0">
+          <string>btn-outline-dark h6</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frame_8">
+        <widget class="QLabel" name="lbl_estado_agente">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>40</height>
+           <height>34</height>
           </size>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+         <property name="text">
+          <string>text_sample</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <property name="class" stdset="0">
-          <string>background-primary</string>
+          <string>h5 color-white</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="lbl_estado_agente">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="class" stdset="0">
-             <string>h5 color-white</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_ver_reporte">
+         <property name="minimumSize">
+          <size>
+           <width>145</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>145</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Ver reporte</string>
+         </property>
+         <property name="class" stdset="0">
+          <string>btn-outline-danger h6</string>
+         </property>
         </widget>
        </item>
       </layout>

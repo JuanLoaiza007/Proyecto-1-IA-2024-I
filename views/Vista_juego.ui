@@ -32,7 +32,7 @@
    <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MandoAI</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/*

@@ -604,7 +604,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MandoAI"))
         self.centralwidget.setProperty("class", _translate("MainWindow", "background-white"))
         self.lbl_titulo.setText(_translate("MainWindow", "MandoAI"))
         self.lbl_titulo.setProperty("class", _translate("MainWindow", "h1 color-primary"))

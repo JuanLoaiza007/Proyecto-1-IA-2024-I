@@ -1,11 +1,10 @@
 # [Controlador_principal.py]
 
 import os
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtGui
 from views.Vista_principal import Ui_MainWindow
 from models.Modelo_principal import Modelo_principal
-from views.Sm_dialog_clean import Ui_Dialog as sm_dialog_clean
-from models.shared.tools.Temporizador import Temporizador
+from models.shared.tools.Dialog import Dialog
 
 debug = True
 
@@ -86,18 +85,7 @@ class Controlador_principal:
 
     def mostrar_dialogo(self, titulo, mensaje):
         self.block_focus()
-        Temporizador.iniciar(1)
-
-        new_dialog = QtWidgets.QDialog()
-        new_ui = sm_dialog_clean()
-        new_ui.setupUi(new_dialog)
-        new_dialog.setModal(True)
-        new_dialog.show()
-        new_ui.lbl_title.setText(titulo)
-        new_ui.lbl_body.setText(mensaje)
-
-        new_dialog.exec()
-
+        Dialog.mostrar_dialogo(titulo, mensaje)
         self.unblock_focus()
 
     def cambiar_tipo_busqueda(self):
@@ -144,10 +132,17 @@ class Controlador_principal:
 
     def iniciar(self):
         if self.modelo.get_mundo() != None:
-            print_debug("Se procede a iniciar")
+            from controllers.Controlador_juego import Controlador_juego
+            self.controlador = Controlador_juego()
+            self.controlador.cargar(self.MainWindow)
+            self.controlador.cargar_ambiente(self.modelo.get_mundo())
+            self.controlador.cargar_algoritmo(
+                self.modelo.get_algoritmo_actual())
+            self.controlador.iniciar_juego()
             return None
 
-        print_debug("El mundo esta vacio, cargue un mundo")
+        self.mostrar_dialogo(
+            "Error", "Debe cargar un mundo válido para iniciar")
 
     def cargar_mundo(self):
         errores = self.modelo.cargar_mundo()

@@ -63,7 +63,8 @@ class Controlador_juego:
         self.MainWindow.destroyed.connect(self.cerrar_ventana)
 
     def cerrar_ventana(self):
-        self.hilo_procesamiento.exit()
+        if self.hilo_procesamiento.isRunning():
+            self.hilo_procesamiento.exit()
         os._exit(0)
 
     def cargar_ambiente(self, ambiente):

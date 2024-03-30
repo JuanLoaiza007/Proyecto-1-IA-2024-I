@@ -70,10 +70,15 @@ class Controlador_juego:
         self.ui.btn_ver_reporte.clicked.connect(self.mostrar_reporte)
 
     def cerrar_procesamientos(self):
-        if self.hilo_procesamiento != None and self.hilo_procesamiento.isRunning():
-            self.hilo_procesamiento.exit()
-        if self.hilo_animacion != None and self.hilo_animacion.isRunning():
-            self.hilo_animacion.exit()
+        try:
+            if self.hilo_procesamiento != None and self.hilo_procesamiento.isRunning():
+                self.hilo_procesamiento.exit()
+            if self.hilo_animacion != None and self.hilo_animacion.isRunning():
+                self.hilo_animacion.exit()
+
+        except RuntimeError:
+            print_debug(
+                "cerrar_procesamiento() -> He absorbido un problema con los hilos")
 
     def cerrar_ventana(self):
         self.cerrar_procesamientos()
@@ -214,7 +219,8 @@ class Controlador_juego:
                     self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
         # Error de ejecucion donde se intenta actualizar la tabla pero ya se cambió la ventana
         except RuntimeError:
-            None
+            print_debug(
+                "reproducir_animacion() -> He absorbido un problema al actualizar la tabla")
 
     def animar_juego(self):
         self.ui.lbl_estado_agente.setText(

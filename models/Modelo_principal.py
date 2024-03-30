@@ -82,15 +82,20 @@ class Modelo_principal:
         self.select_algoritmo("a*")
 
     def cargar_mundo(self):
-        # Cargar archivo de mundo
-        file_selector = File_selector()
-        archivo = file_selector.select("data/worlds")
+        try:
+            # Cargar archivo de mundo
+            file_selector = File_selector()
+            archivo = file_selector.select("data/worlds")
 
-        errores = wtools.comprobar_mundo(archivo)
+            errores = wtools.comprobar_mundo(archivo)
 
-        if len(errores) != 0:
+            if len(errores) != 0:
+                self.mundo = None
+                return errores
+
+            self.mundo = wtools.generar_mundo(archivo)
+        except TypeError:
             self.mundo = None
-            return errores
-
-        self.mundo = wtools.generar_mundo(archivo)
-        return None
+            print_debug(
+                "cargar_mundo() -> He absorbido un error ocasionado por una ruta de archivo inválida")
+            return None

@@ -639,6 +639,9 @@ QLabel {
                     <height>32</height>
                    </size>
                   </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                   <property name="class" stdset="0">
                    <string>h6</string>
                   </property>
@@ -689,6 +692,9 @@ QLabel {
                     <width>400</width>
                     <height>32</height>
                    </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="class" stdset="0">
                    <string>h6</string>

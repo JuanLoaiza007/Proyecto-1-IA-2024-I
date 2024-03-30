@@ -172,6 +172,6 @@ class Controlador_principal:
             self.mostrar_dialogo(titulo, mensaje)
 
     def mostrar_sobre_nosotros(self):
-        from controllers.Controlador_sobre_nosotros import controlador_sobre_nosotros
-        self.controlador_sobre_nosotros = controlador_sobre_nosotros()
+        from controllers.Controlador_sobre_nosotros import Controlador_sobre_nosotros
+        self.controlador_sobre_nosotros = Controlador_sobre_nosotros()
         self.controlador_sobre_nosotros.mostrar(self.MainWindow)

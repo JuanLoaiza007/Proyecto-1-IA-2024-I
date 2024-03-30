@@ -23,8 +23,6 @@ class Controlador_principal:
         self.MainWindow = main_window
         self.minSizeHint = QSize(800, 600)
         self.maxSizeHint = QSize(800, 600)
-        print_debug("Tamaño minimo es: {} tamaño maximo es: {}".format(
-            str(self.minSizeHint), str(self.maxSizeHint)))
         self.restart_window_size()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)

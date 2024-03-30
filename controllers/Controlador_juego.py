@@ -101,6 +101,7 @@ class Controlador_juego:
             algoritmo (str): El nombre corto del algoritmo a usar (revise modelo para ver los nombres).
         """
         self.modelo.cargar_algorimo(algoritmo)
+        self.ui.lbl_titulo.setText(str(algoritmo).capitalize())
 
     def inicializar_tabla(self):
         self.ui.table_mapa.setRowCount(10)

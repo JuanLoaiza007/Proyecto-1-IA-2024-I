@@ -35,12 +35,23 @@ class WorkerThread(QThread):
 
 
 class Controlador_juego:
+    """
+    Clase Controlador_juego. 
+    Gestiona todo lo necesario para ejecutar un algoritmo y mostrarlo visualmente
+
+    Atencion! Antes de ejecutar "mostrar()":
+        * cargar(mainwindow)
+        * cargar_ambiente(ambiente)
+        * cargar_algoritmo(algoritmo)
+    """
+
     # Funcion para inicializar (general)
     def cargar(self, main_window):
         self.modelo = Modelo_juego()
         self.MainWindow = main_window
-        self.MainWindow.setMinimumSize(self.MainWindow.minimumSizeHint())
-        self.MainWindow.setMaximumSize(16777215, 16777215)
+        self.minSizeHint = self.MainWindow.minimumSizeHint()
+        self.maxSizeHint = self.MainWindow.minimumSizeHint()
+        self.restart_window_size()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
         self.inicializar_tabla()
@@ -54,6 +65,24 @@ class Controlador_juego:
     def cerrar_ventana(self):
         self.hilo_procesamiento.exit()
         os._exit(0)
+
+    def cargar_ambiente(self, ambiente):
+        """
+        Carga el ambiente en su propio modelo
+
+        Args:
+            ambiente (matriz): Un ambiente válido preparado con wtools.generar_mundo()
+        """
+        self.modelo.cargar_ambiente(ambiente)
+
+    def cargar_algoritmo(self, algoritmo):
+        """
+        Carga el ambiente en su propio modelo
+
+        Args:
+            algoritmo (str): El nombre corto del algoritmo a usar (revise modelo para ver los nombres).
+        """
+        self.modelo.cargar_algorimo(algoritmo)
 
     def inicializar_tabla(self):
         self.ui.table_mapa.setRowCount(10)
@@ -99,25 +128,47 @@ class Controlador_juego:
     def mostrar(self, main_window):
         self.cargar(main_window)
         self.MainWindow.show()
-        Temporizador.iniciar(1)
-        self.iniciar_juego()
 
-    def block_focus(self, window):
+    def block_window_size(self):
+        self.MainWindow.setFixedSize(self.MainWindow.size())
+
+    def restart_window_size(self):
+        self.MainWindow.setMinimumSize(self.minSizeHint)
+        self.MainWindow.setMaximumSize(self.maxSizeHint)
+
+    def block_focus(self):
+        """
+        Funcion intuitiva para mostrar que la ventana principal NO es la que esta recibiendo eventos, ayuda a mostrar que el flujo de trabajo esta ocurriendo en otra ventana.
+        """
         self.MainWindow.setEnabled(False)
-        self.MainWindow.setFixedSize(window.size())
+        self.ui.centralwidget.setEnabled(False)
+        self.ui.centralwidget.setVisible(False)
+        self.block_window_size()
+
+    def little_block_focus(self):
+        """
+        Funcion intuitiva para mostrar que la ventana principal esta procesando sin embargo el flujo de trabajo esta actualmente en ella.
+        """
+        self.MainWindow.setEnabled(False)
+        self.ui.centralwidget.setEnabled(False)
+        self.block_window_size()
 
     def unblock_focus(self):
-        self.MainWindow.setMinimumSize(self.MainWindow.minimumSizeHint())
-        self.MainWindow.setMaximumSize(16777215, 16777215)
+        """
+        Funcion intuitiva para revertir block_focus() y little_block_focus(), muestra que el flujo de trabajo esta ocurriendo en la ventana principal y habilita los eventos.
+        """
+        self.restart_window_size()
         self.MainWindow.setEnabled(True)
+        self.ui.centralwidget.setEnabled(True)
+        self.ui.centralwidget.setVisible(True)
 
     def iniciar_juego(self):
         Temporizador.iniciar(100)
         self.modelo.preparar_juego()
-        ambiente = self.modelo.ambiente
+        self.ambiente = self.modelo.ambiente
         e_inicial = self.modelo.estado_inicial.get_coordenadas()
         e_objetivo = self.modelo.estado_objetivo.get_coordenadas()
-        self.actualizar_tabla(ambiente, e_inicial, e_objetivo)
+        self.actualizar_tabla(self.ambiente, e_inicial, e_objetivo)
         self.ui.lbl_estado_agente.setText(
             "Mando esta pensando... *guiño guiño*")
 
@@ -140,4 +191,5 @@ class Controlador_juego:
                 self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
 
         Temporizador.iniciar(100)
-        Dialog.mostrar(self.modelo.resultado)
+        titulo = "Resultado"
+        Dialog.mostrar_dialogo(titulo, self.modelo.resultado)

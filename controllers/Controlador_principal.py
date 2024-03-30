@@ -27,6 +27,7 @@ class Controlador_principal:
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
         self.cargar_imagenes()
+        self.mensaje_mundo_no_cargado()
 
         # Configuracion del modelo
         self.modelo.select_busqueda_no_informada()
@@ -145,21 +146,29 @@ class Controlador_principal:
         self.mostrar_dialogo(
             "Error", "Debe cargar un mundo válido para iniciar")
 
+    def mensaje_mundo_no_cargado(self):
+        self.ui.lbl_estado_mundo.setText("No hay ningun mundo cargado!")
+        self.ui.btn_iniciar.setVisible(False)
+
+    def mensaje_mundo_cargado(self):
+        self.ui.lbl_estado_mundo.setText("Se ha cargado un mundo!")
+        self.ui.btn_iniciar.setVisible(True)
+
     def cargar_mundo(self):
         errores = self.modelo.cargar_mundo()
-        titulo = ""
-        mensaje = ""
 
         if errores == None:
-            titulo = "Operacion exitosa"
-            mensaje = "El archivo seleccionado es un mundo válido para probar el algoritmo."
+            if self.modelo.get_mundo() != None:
+                self.mensaje_mundo_cargado()
+            else:
+                self.mensaje_mundo_no_cargado()
         else:
+            self.mensaje_mundo_no_cargado()
             titulo = "Operacion fallida"
             mensaje = "El archivo seleccionado NO es un mundo válido por las siguientes razones:\n\n"
             for error in errores:
                 mensaje += "* " + error + "\n"
-
-        self.mostrar_dialogo(titulo, mensaje)
+            self.mostrar_dialogo(titulo, mensaje)
 
     def mostrar_sobre_nosotros(self):
         from controllers.Controlador_sobre_nosotros import controlador_sobre_nosotros

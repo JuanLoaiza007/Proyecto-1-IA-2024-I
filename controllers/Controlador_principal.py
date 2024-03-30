@@ -2,6 +2,7 @@
 
 import os
 from PyQt5 import QtGui
+from PyQt5.QtCore import QSize
 from views.Vista_principal import Ui_MainWindow
 from models.Modelo_principal import Modelo_principal
 from models.shared.tools.Dialog import Dialog
@@ -20,8 +21,10 @@ class Controlador_principal:
     def cargar(self, main_window):
         self.modelo = Modelo_principal()
         self.MainWindow = main_window
-        self.minSizeHint = self.MainWindow.minimumSizeHint()
-        self.maxSizeHint = self.MainWindow.minimumSizeHint()
+        self.minSizeHint = QSize(800, 600)
+        self.maxSizeHint = QSize(800, 600)
+        print_debug("Tamaño minimo es: {} tamaño maximo es: {}".format(
+            str(self.minSizeHint), str(self.maxSizeHint)))
         self.restart_window_size()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)

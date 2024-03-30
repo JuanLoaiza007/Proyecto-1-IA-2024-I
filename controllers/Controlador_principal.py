@@ -114,6 +114,7 @@ class Controlador_principal:
             self.ui.box_algoritmo.addItem(nombre)
 
         self.ui.box_algoritmo.setCurrentIndex(0)
+        self.cambiar_algoritmo()
 
     def cambiar_algoritmo(self):
         tipo_busqueda = self.modelo.get_tipo_busqueda()

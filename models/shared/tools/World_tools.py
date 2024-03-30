@@ -33,10 +33,15 @@ class World_tools:
     def generar_mundo(ruta_archivo):
         matriz = []
 
-        with open(ruta_archivo, 'r') as archivo:
-            for linea in archivo:
-                fila = [str(x) for x in linea.strip().split(' ')]
-                matriz.append(fila)
+        try:
+            with open(ruta_archivo, 'r') as archivo:
+                for linea in archivo:
+                    fila = [str(x) for x in linea.strip().split(' ')]
+                    matriz.append(fila)
+        except FileNotFoundError:
+            print_debug(
+                "generar_mundo() -> No se ha seleccionado ningun archivo")
+            return None
 
         return matriz
 

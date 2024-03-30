@@ -25,13 +25,14 @@ class WorkerThread(QThread):
     Clase de Hilo Trabajador para ejecutar procesamiento en segundo plano y conservar la ventana recibiendo eventos.
     """
 
-    def __init__(self, modelo: Modelo_juego):
-
+    def __init__(self, funcion, *args, **kwargs):
         super().__init__()
-        self.modelo = modelo
+        self.funcion = funcion
+        self.args = args
+        self.kwargs = kwargs
 
     def run(self):
-        self.modelo.iniciar_juego()
+        self.funcion(*self.args, **self.kwargs)
 
 
 class Controlador_juego:
@@ -49,22 +50,33 @@ class Controlador_juego:
     def cargar(self, main_window):
         self.modelo = Modelo_juego()
         self.MainWindow = main_window
-        self.minSizeHint = self.MainWindow.minimumSizeHint()
-        self.maxSizeHint = self.MainWindow.minimumSizeHint()
+        self.minSizeHint = QSize(800, 600)
+        self.maxSizeHint = QSize(800, 600)
         self.restart_window_size()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
+        self.deshabilitar_botones_footer()
         self.inicializar_tabla()
 
         # Hilo de procesamiento
         self.hilo_procesamiento: WorkerThread = None
+        self.hilo_animacion: WorkerThread = None
 
         # Evento para cierre de programa
         self.MainWindow.destroyed.connect(self.cerrar_ventana)
 
-    def cerrar_ventana(self):
-        if self.hilo_procesamiento.isRunning():
+        # Listeners
+        self.ui.btn_volver.clicked.connect(self.volver)
+        self.ui.btn_ver_reporte.clicked.connect(self.mostrar_reporte)
+
+    def cerrar_procesamientos(self):
+        if self.hilo_procesamiento != None and self.hilo_procesamiento.isRunning():
             self.hilo_procesamiento.exit()
+        if self.hilo_animacion != None and self.hilo_animacion.isRunning():
+            self.hilo_animacion.exit()
+
+    def cerrar_ventana(self):
+        self.cerrar_procesamientos()
         os._exit(0)
 
     def cargar_ambiente(self, ambiente):
@@ -163,6 +175,18 @@ class Controlador_juego:
         self.ui.centralwidget.setEnabled(True)
         self.ui.centralwidget.setVisible(True)
 
+    def habilitar_botones_footer(self):
+        self.ui.btn_volver.setVisible(True)
+        self.ui.btn_volver.setEnabled(True)
+        self.ui.btn_ver_reporte.setVisible(True)
+        self.ui.btn_ver_reporte.setEnabled(True)
+
+    def deshabilitar_botones_footer(self):
+        self.ui.btn_volver.setVisible(False)
+        self.ui.btn_volver.setEnabled(False)
+        self.ui.btn_ver_reporte.setVisible(False)
+        self.ui.btn_ver_reporte.setEnabled(False)
+
     def iniciar_juego(self):
         Temporizador.iniciar(100)
         self.modelo.preparar_juego()
@@ -175,22 +199,39 @@ class Controlador_juego:
 
         Temporizador.iniciar(100)
         # Hilo para mantener la interfaz atenta
-        self.hilo_procesamiento = WorkerThread(self.modelo)
+        self.hilo_procesamiento = WorkerThread(self.modelo.iniciar_juego)
         # Eventos que requieren los calculos del hilo
         self.hilo_procesamiento.finished.connect(
             self.animar_juego)
         # Inicia las tareas del hilo de la funcion run()
         self.hilo_procesamiento.start()
 
+    def reproducir_animacion(self):
+        try:
+            for paso in self.modelo.camino:
+                Temporizador.iniciar(600)
+                self.actualizar_tabla(
+                    self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
+        # Error de ejecucion donde se intenta actualizar la tabla pero ya se cambió la ventana
+        except RuntimeError:
+            None
+
     def animar_juego(self):
         self.ui.lbl_estado_agente.setText(
-            "Mando ha tomado una decision")
+            str(self.modelo.resultado))
+        self.habilitar_botones_footer()
 
-        for paso in self.modelo.camino:
-            Temporizador.iniciar(600)
-            self.actualizar_tabla(
-                self.modelo.ambiente, paso, self.modelo.estado_objetivo.get_coordenadas())
+        self.hilo_animacion = WorkerThread(self.reproducir_animacion)
+        self.hilo_animacion.start()
 
-        Temporizador.iniciar(100)
-        titulo = "Resultado"
-        Dialog.mostrar_dialogo(titulo, self.modelo.resultado)
+    def volver(self):
+        self.cerrar_procesamientos()
+        from controllers.Controlador_principal import Controlador_principal as New_Controlador
+        self.new_controlador = New_Controlador()
+        self.new_controlador.cargar(self.MainWindow)
+        return None
+
+    def mostrar_reporte(self):
+        self.little_block_focus()
+        Dialog.mostrar_dialogo("Reporte", str(self.modelo.resultado))
+        self.unblock_focus()

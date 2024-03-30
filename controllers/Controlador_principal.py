@@ -21,8 +21,9 @@ class Controlador_principal:
     def cargar(self, main_window):
         self.modelo = Modelo_principal()
         self.MainWindow = main_window
-        self.MainWindow.setMinimumSize(self.MainWindow.minimumSizeHint())
-        self.MainWindow.setMaximumSize(16777215, 16777215)
+        self.minSizeHint = self.MainWindow.minimumSizeHint()
+        self.maxSizeHint = self.MainWindow.minimumSizeHint()
+        self.restart_window_size()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
         self.cargar_imagenes()
@@ -41,6 +42,13 @@ class Controlador_principal:
         self.ui.btn_iniciar.clicked.connect(self.iniciar)
         self.ui.btn_sobre.clicked.connect(self.mostrar_sobre_nosotros)
 
+    def block_window_size(self):
+        self.MainWindow.setFixedSize(self.MainWindow.size())
+
+    def restart_window_size(self):
+        self.MainWindow.setMinimumSize(self.minSizeHint)
+        self.MainWindow.setMaximumSize(self.maxSizeHint)
+
     def cargar_imagenes(self):
         image_path = os.path.abspath(
             "./views/assets/gui/sidebar_image.png")
@@ -57,7 +65,7 @@ class Controlador_principal:
         self.MainWindow.setEnabled(False)
         self.ui.centralwidget.setEnabled(False)
         self.ui.centralwidget.setVisible(False)
-        self.MainWindow.setFixedSize(self.MainWindow.size())
+        self.block_window_size()
 
     def little_block_focus(self):
         """
@@ -65,14 +73,13 @@ class Controlador_principal:
         """
         self.MainWindow.setEnabled(False)
         self.ui.centralwidget.setEnabled(False)
-        self.MainWindow.setFixedSize(self.MainWindow.size())
+        self.block_window_size()
 
     def unblock_focus(self):
         """
         Funcion intuitiva para revertir block_focus() y little_block_focus(), muestra que el flujo de trabajo esta ocurriendo en la ventana principal y habilita los eventos.
         """
-        self.MainWindow.setMinimumSize(self.MainWindow.minimumSizeHint())
-        self.MainWindow.setMaximumSize(16777215, 16777215)
+        self.restart_window_size()
         self.MainWindow.setEnabled(True)
         self.ui.centralwidget.setEnabled(True)
         self.ui.centralwidget.setVisible(True)

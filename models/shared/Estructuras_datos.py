@@ -1,5 +1,24 @@
 # [Estructura_datos.py]
 from queue import Queue
+import json
+
+debug = True
+
+
+def print_debug(message):
+    new_message = "Estructura_datos.py: " + message
+    if debug:
+        print(new_message)
+
+
+dic_objetos = None
+try:
+    with open("./data/characters.json", 'r') as archivo_json:
+        dic_objetos = json.load(archivo_json)
+except json.JSONDecodeError:
+    print(
+        "Error: El archivo characters.json no se puede convertir a un diccionario.")
+    dic_objetos = None
 
 
 class Operador:
@@ -46,6 +65,22 @@ class Estado:
         """
         self.x = x
         self.y = y
+        self.en_nave = False
+        self.movimientos_nave = 0
+
+    def activar_nave(self):
+        self.en_nave = True
+        self.movimientos_nave = 10
+
+    def usar_nave(self):
+        print_debug("Estado.usar_nave() ->\nEl estado en nave es {} y los movimientos de nave disponibles son {}".format(
+            str(self.en_nave), str(self.movimientos_nave)))
+        if self.en_nave == False or self.movimientos_nave <= 0:
+            return False
+        self.movimientos_nave -= 1
+        if self.movimientos_nave == 0:
+            self.en_nave = False
+        return True
 
     def get_coordenadas(self):
         return [self.x, self.y]
@@ -60,7 +95,9 @@ class Estado:
         Returns:
             Las coordenadas en string.
         """
-        return f"({self.x}, {self.y})"
+        a_string = "{} {} {}".format(
+            str(self.x), str(self.y), str(self.en_nave))
+        return a_string
 
 
 class Problema:
@@ -112,8 +149,22 @@ class Problema:
         if not (enMatriz):
             return False
 
-        enPared = self.matriz[estado.x][estado.y] != "1"
-        return enMatriz and enPared
+        enPared = self.matriz[estado.x][estado.y] == dic_objetos['pared']
+        return enMatriz and not (enPared)
+
+    def hay_nave(self, estado: Estado) -> bool:
+        nave = self.matriz[estado.x][estado.y] == dic_objetos['nave']
+        if nave:
+            print_debug("En (x:{}, y:{}) hay nave".format(
+                str(estado.y), str(estado.x)))
+        return nave
+
+    def hay_enemigo(self, estado: Estado) -> bool:
+        enemigo = self.matriz[estado.x][estado.y] == dic_objetos['enemigo']
+        if enemigo:
+            print_debug("En (x:{}, y:{}) hay enemigo".format(
+                str(estado.y), str(estado.x)))
+        return enemigo
 
     def es_estado_objetivo(self) -> bool:
         """
@@ -142,7 +193,7 @@ class Problema:
         estado = self.estado_inicial
         # OJO: Aquí hay una corrección para los indices de la matriz,
         # arriba es (0, -1) y así sucesivamente.
-        #En el árbol de búsqueda el orden de los operadores sería arriba, izquierda, abajo, derecha
+        # En el árbol de búsqueda el orden de los operadores sería arriba, izquierda, abajo, derecha
         for dy, dx, operador_nombre in [(1, 0, 'derecha'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (0, -1, 'arriba')]:
             nuevo_estado = Estado(estado.x + dx, estado.y + dy)
             if self.es_estado_valido(nuevo_estado):
@@ -199,6 +250,7 @@ class Nodo:
         self.operador: Operador = None
         self.profundidad: int = 0
         self.costo_acumulado: int = 0
+        self.costo = 1
 
     def __str__(self) -> str:
         padre = None
@@ -279,6 +331,16 @@ class Nodo:
                 self.hijos.append(hijo)
 
         return self.hijos
+
+
+if __name__ == '__main__':
+    estado_inicial = Estado(0, 0)
+    estado_inicial.activar_nave()
+    for i in range(11):
+        if estado_inicial.usar_nave():
+            print("Vamos en la nave")
+        else:
+            print("No vamos en la nave")
 
 
 class Test():

@@ -32,7 +32,7 @@ class Profundidad:
             if nodo.es_meta():
                 camino = Profundidad.reconstruir_camino(nodo)
                 reporte = Profundidad.generar_reporte(
-                    nodos_expandidos, profundidad, tiempo_inicio)
+                    nodos_expandidos, profundidad, tiempo_inicio, nodo)
 
                 return camino, 'Encontré a grogu', reporte
 
@@ -61,7 +61,7 @@ class Profundidad:
 
         camino = Profundidad.reconstruir_camino(nodo)
         reporte = Profundidad.generar_reporte(
-            nodos_expandidos, profundidad, tiempo_inicio)
+            nodos_expandidos, profundidad, tiempo_inicio, nodo)
 
         return camino, 'Me perdí', reporte
 
@@ -109,10 +109,10 @@ class Profundidad:
         return False
 
     @staticmethod
-    def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio):
+    def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio, nodo_act: Nodo):
         tiempo_computo = round(time.time() - tiempo_inicio, 6)
-        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s".format(
-            str(nodos_expandidos), str(profundidad), str(tiempo_computo))
+        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s\nCosto: {}".format(
+            str(nodos_expandidos), str(profundidad), str(tiempo_computo), str(nodo_act.get_costo_acumulado()))
 
 
 class Test():

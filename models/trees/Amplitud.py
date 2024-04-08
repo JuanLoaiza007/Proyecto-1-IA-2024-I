@@ -6,7 +6,7 @@ from models.shared.Estructuras_datos import *
 evitar_devolverse = True
 evitar_ciclo = True
 
-debug = True
+debug = False
 
 
 def print_debug(message):
@@ -32,7 +32,7 @@ class Amplitud:
             if nodo.es_meta():
                 camino = Amplitud.reconstruir_camino(nodo)
                 reporte = Amplitud.generar_reporte(
-                    nodos_expandidos, profundidad, tiempo_inicio)
+                    nodos_expandidos, profundidad, tiempo_inicio, nodo)
 
                 return camino, 'Encontré a grogu', reporte
 
@@ -61,7 +61,7 @@ class Amplitud:
 
         camino = Amplitud.reconstruir_camino(nodo)
         reporte = Amplitud.generar_reporte(
-            nodos_expandidos, profundidad, tiempo_inicio)
+            nodos_expandidos, profundidad, tiempo_inicio, nodo)
 
         return camino, 'Me perdí', reporte
 
@@ -109,10 +109,10 @@ class Amplitud:
         return False
 
     @staticmethod
-    def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio):
+    def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio, nodo_act: Nodo):
         tiempo_computo = round(time.time() - tiempo_inicio, 6)
-        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s".format(
-            str(nodos_expandidos), str(profundidad), str(tiempo_computo))
+        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s\nCosto: {}".format(
+            str(nodos_expandidos), str(profundidad), str(tiempo_computo), str(nodo_act.get_costo_acumulado()))
 
 
 class Test():

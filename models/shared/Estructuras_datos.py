@@ -1,6 +1,7 @@
 # [Estructura_datos.py]
 from queue import Queue
 import json
+import copy
 
 debug = True
 
@@ -73,8 +74,6 @@ class Estado:
         self.movimientos_nave = 10
 
     def usar_nave(self):
-        print_debug("Estado.usar_nave() ->\nEl estado en nave es {} y los movimientos de nave disponibles son {}".format(
-            str(self.en_nave), str(self.movimientos_nave)))
         if self.en_nave == False or self.movimientos_nave <= 0:
             return False
         self.movimientos_nave -= 1
@@ -150,6 +149,7 @@ class Problema:
             return False
 
         enPared = self.matriz[estado.x][estado.y] == dic_objetos['pared']
+
         return enMatriz and not (enPared)
 
     def hay_nave(self, estado: Estado) -> bool:
@@ -250,7 +250,6 @@ class Nodo:
         self.operador: Operador = None
         self.profundidad: int = 0
         self.costo_acumulado: int = 0
-        self.costo = 1
 
     def __str__(self) -> str:
         padre = None
@@ -315,18 +314,39 @@ class Nodo:
             return self.hijos
 
         for operador in operadores:
+            # Creo un nuevo estado despues de aplicar el operador
             nuevo_estado = self.problema.resultado(
                 self.problema.estado_inicial, operador)
 
+            # Verifico si hay una nave en el nuevo estado y la activo
+            if self.problema.hay_nave(nuevo_estado):
+                nuevo_estado.activar_nave()
+
+            # Nuevo problema para el nodo, cambia el estado en el que esta
             nuevo_problema = Problema(
                 nuevo_estado, self.problema.get_estado_objetivo(), self.problema.get_matriz())
 
+            # Costo por defecto que tendrá el nuevo nodo
+            costo = 1
+            copia_estado_inicial = copy.deepcopy(self.problema.estado_inicial)
+
+            # Si hay un enemigo al estado donde voy el costo será mayor
+            if self.problema.hay_enemigo(nuevo_estado):
+                print_debug("El costo ha cambiado")
+                costo = 5
+
+            # Si puedo usar la nave en el estado en el que estoy el costo será menor
+            if copia_estado_inicial.usar_nave():
+                print_debug("El costo ha cambiado, uso la nave")
+                costo = 0.5
+
             if nuevo_estado != None:
+
                 hijo = Nodo(nuevo_problema)
                 hijo.set_padre(self)
                 hijo.set_operador(operador)
                 hijo.set_profundidad(self.profundidad + 1)
-                hijo.set_costo_acumulado(self.costo_acumulado + 1)
+                hijo.set_costo_acumulado(self.costo_acumulado + costo)
 
                 self.hijos.append(hijo)
 

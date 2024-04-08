@@ -1,5 +1,25 @@
 # [Estructura_datos.py]
 from queue import Queue
+import json
+import copy
+
+debug = True
+
+
+def print_debug(message):
+    new_message = "Estructura_datos.py: " + message
+    if debug:
+        print(new_message)
+
+
+dic_objetos = None
+try:
+    with open("./data/characters.json", 'r') as archivo_json:
+        dic_objetos = json.load(archivo_json)
+except json.JSONDecodeError:
+    print(
+        "Error: El archivo characters.json no se puede convertir a un diccionario.")
+    dic_objetos = None
 
 
 class Operador:
@@ -46,9 +66,39 @@ class Estado:
         """
         self.x = x
         self.y = y
+        self.en_nave = False
+        self.movimientos_nave = 0
+
+    def activar_nave(self):
+        self.en_nave = True
+        self.movimientos_nave = 10
+
+    def puede_usar_nave(self):
+        # Verifica que se pueda usar
+        if self.en_nave == False or self.movimientos_nave <= 0:
+            return False
+        return True
+
+    def usar_nave(self):
+        if not (self.puede_usar_nave):
+            print_debug(
+                "Estado.usar_nave() -> Me has llamado pero no puedes usar la nave")
+            return False
+
+        # Resta un movimiento
+        self.movimientos_nave -= 1
+
+        # Comprueba si quedan movimientos
+        if self.movimientos_nave == 0:
+            # Actualiza las ventajas de la nave
+            self.en_nave = False
+        return True
 
     def get_coordenadas(self):
         return [self.x, self.y]
+
+    def get_info_nave(self):
+        return self.en_nave, self.movimientos_nave
 
     def __str__(self) -> str:
         """
@@ -60,7 +110,9 @@ class Estado:
         Returns:
             Las coordenadas en string.
         """
-        return f"({self.x}, {self.y})"
+        a_string = "{} {} {}".format(
+            str(self.x), str(self.y), str(self.en_nave))
+        return a_string
 
 
 class Problema:
@@ -112,8 +164,17 @@ class Problema:
         if not (enMatriz):
             return False
 
-        enPared = self.matriz[estado.x][estado.y] != "1"
-        return enMatriz and enPared
+        enPared = self.matriz[estado.x][estado.y] == dic_objetos['pared']
+
+        return enMatriz and not (enPared)
+
+    def hay_nave(self, estado: Estado) -> bool:
+        nave = self.matriz[estado.x][estado.y] == dic_objetos['nave']
+        return nave
+
+    def hay_enemigo(self, estado: Estado) -> bool:
+        enemigo = self.matriz[estado.x][estado.y] == dic_objetos['enemigo']
+        return enemigo
 
     def es_estado_objetivo(self) -> bool:
         """
@@ -142,7 +203,7 @@ class Problema:
         estado = self.estado_inicial
         # OJO: Aquí hay una corrección para los indices de la matriz,
         # arriba es (0, -1) y así sucesivamente.
-        #En el árbol de búsqueda el orden de los operadores sería arriba, izquierda, abajo, derecha
+        # En el árbol de búsqueda el orden de los operadores sería arriba, izquierda, abajo, derecha
         for dy, dx, operador_nombre in [(1, 0, 'derecha'), (0, 1, 'abajo'), (-1, 0, 'izquierda'), (0, -1, 'arriba')]:
             nuevo_estado = Estado(estado.x + dx, estado.y + dy)
             if self.es_estado_valido(nuevo_estado):
@@ -263,26 +324,62 @@ class Nodo:
             return self.hijos
 
         for operador in operadores:
+            # === Creacion y configuracion del nuevo estado ===
+            # Creo un nuevo estado despues de aplicar el operador
             nuevo_estado = self.problema.resultado(
                 self.problema.estado_inicial, operador)
+            nuevo_estado.en_nave, nuevo_estado.movimientos_nave = self.problema.estado_inicial.get_info_nave()
+            # Verifico si hay una nave en el nuevo estado y la activo
+            if self.problema.hay_nave(nuevo_estado):
+                nuevo_estado.activar_nave()
 
+            # === Asignacion de costo y actualizacion del nuevo estado ===
+            costo = 1
+
+            # Si hay un enemigo al estado donde voy el costo será mayor
+            if self.problema.hay_enemigo(nuevo_estado):
+                costo = 5
+
+            # Si puedo usar la nave en el estado actual se degenera su uso en el siguiente estado
+            # y el costo será menor
+            if self.problema.estado_inicial.puede_usar_nave():
+                nuevo_estado.usar_nave()
+                costo = 0.5
+
+            # Creo el problema con el nodo ya configurado
             nuevo_problema = Problema(
                 nuevo_estado, self.problema.get_estado_objetivo(), self.problema.get_matriz())
 
             if nuevo_estado != None:
+
                 hijo = Nodo(nuevo_problema)
                 hijo.set_padre(self)
                 hijo.set_operador(operador)
                 hijo.set_profundidad(self.profundidad + 1)
-                hijo.set_costo_acumulado(self.costo_acumulado + 1)
+                hijo.set_costo_acumulado(self.costo_acumulado + costo)
 
                 self.hijos.append(hijo)
 
         return self.hijos
 
 
+if __name__ == '__main__':
+    estado_inicial = Estado(0, 0)
+    estado_inicial.activar_nave()
+    estado_inicial.activar_nave()
+
+    estado_final = copy.deepcopy(estado_inicial)
+
+    print(str(estado_inicial))
+
+    for i in range(10):
+        estado_final.usar_nave()
+
+    print(str(estado_inicial))
+
+
 class Test():
-    @staticmethod
+    @ staticmethod
     def start():
         from models.shared.tools.World_tools import World_tools as wtools
         from models.shared.tools.File_selector import File_selector

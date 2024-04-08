@@ -73,16 +73,32 @@ class Estado:
         self.en_nave = True
         self.movimientos_nave = 10
 
-    def usar_nave(self):
+    def puede_usar_nave(self):
+        # Verifica que se pueda usar
         if self.en_nave == False or self.movimientos_nave <= 0:
             return False
+        return True
+
+    def usar_nave(self):
+        if not (self.puede_usar_nave):
+            print_debug(
+                "Estado.usar_nave() -> Me has llamado pero no puedes usar la nave")
+            return False
+
+        # Resta un movimiento
         self.movimientos_nave -= 1
+
+        # Comprueba si quedan movimientos
         if self.movimientos_nave == 0:
+            # Actualiza las ventajas de la nave
             self.en_nave = False
         return True
 
     def get_coordenadas(self):
         return [self.x, self.y]
+
+    def get_info_nave(self):
+        return self.en_nave, self.movimientos_nave
 
     def __str__(self) -> str:
         """
@@ -154,16 +170,10 @@ class Problema:
 
     def hay_nave(self, estado: Estado) -> bool:
         nave = self.matriz[estado.x][estado.y] == dic_objetos['nave']
-        if nave:
-            print_debug("En (x:{}, y:{}) hay nave".format(
-                str(estado.y), str(estado.x)))
         return nave
 
     def hay_enemigo(self, estado: Estado) -> bool:
         enemigo = self.matriz[estado.x][estado.y] == dic_objetos['enemigo']
-        if enemigo:
-            print_debug("En (x:{}, y:{}) hay enemigo".format(
-                str(estado.y), str(estado.x)))
         return enemigo
 
     def es_estado_objetivo(self) -> bool:
@@ -314,31 +324,31 @@ class Nodo:
             return self.hijos
 
         for operador in operadores:
+            # === Creacion y configuracion del nuevo estado ===
             # Creo un nuevo estado despues de aplicar el operador
             nuevo_estado = self.problema.resultado(
                 self.problema.estado_inicial, operador)
-
+            nuevo_estado.en_nave, nuevo_estado.movimientos_nave = self.problema.estado_inicial.get_info_nave()
             # Verifico si hay una nave en el nuevo estado y la activo
             if self.problema.hay_nave(nuevo_estado):
                 nuevo_estado.activar_nave()
 
-            # Nuevo problema para el nodo, cambia el estado en el que esta
-            nuevo_problema = Problema(
-                nuevo_estado, self.problema.get_estado_objetivo(), self.problema.get_matriz())
-
-            # Costo por defecto que tendrá el nuevo nodo
+            # === Asignacion de costo y actualizacion del nuevo estado ===
             costo = 1
-            copia_estado_inicial = copy.deepcopy(self.problema.estado_inicial)
 
             # Si hay un enemigo al estado donde voy el costo será mayor
             if self.problema.hay_enemigo(nuevo_estado):
-                print_debug("El costo ha cambiado")
                 costo = 5
 
-            # Si puedo usar la nave en el estado en el que estoy el costo será menor
-            if copia_estado_inicial.usar_nave():
-                print_debug("El costo ha cambiado, uso la nave")
+            # Si puedo usar la nave en el estado actual se degenera su uso en el siguiente estado
+            # y el costo será menor
+            if self.problema.estado_inicial.puede_usar_nave():
+                nuevo_estado.usar_nave()
                 costo = 0.5
+
+            # Creo el problema con el nodo ya configurado
+            nuevo_problema = Problema(
+                nuevo_estado, self.problema.get_estado_objetivo(), self.problema.get_matriz())
 
             if nuevo_estado != None:
 
@@ -356,15 +366,20 @@ class Nodo:
 if __name__ == '__main__':
     estado_inicial = Estado(0, 0)
     estado_inicial.activar_nave()
-    for i in range(11):
-        if estado_inicial.usar_nave():
-            print("Vamos en la nave")
-        else:
-            print("No vamos en la nave")
+    estado_inicial.activar_nave()
+
+    estado_final = copy.deepcopy(estado_inicial)
+
+    print(str(estado_inicial))
+
+    for i in range(10):
+        estado_final.usar_nave()
+
+    print(str(estado_inicial))
 
 
 class Test():
-    @staticmethod
+    @ staticmethod
     def start():
         from models.shared.tools.World_tools import World_tools as wtools
         from models.shared.tools.File_selector import File_selector

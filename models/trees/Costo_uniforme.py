@@ -9,47 +9,47 @@ evitar_ciclo = True
 
 debug = True
 
+
+def print_debug(message):
+    new_message = "Costo_uniforme.py: " + message
+    if debug:
+        print(new_message)
+
+
 class Costo_uniforme:
     def busqueda_por_costo_uniforme(problema: Problema):
         nodos_expandidos = 0
         profundidad = 0
-        reporte = "Generando..."   
-        
+        reporte = "Generando..."
+
         tiempo_inicio = time.time()
-        # cola_prioridad = []
         cola_prioridad = PriorityQueue()
         cola_prioridad.put((0, Nodo(problema)))
-        visitados = set()
-        # print(cola_prioridad.get())
-        
+
         # while not len(cola_prioridad) == 0:
         while not cola_prioridad.empty():
-            print(f"La cola de prioridad actual es {cola_prioridad}")
+            print_debug("La cola de prioridad actual es {}".format(
+                str(cola_prioridad)))
             costo_acumulado, nodo = cola_prioridad.get()  # Saca un nodo de la cola
-            print(costo_acumulado)
-            print(nodo)       
-            print((costo_acumulado, nodo))
-            
+            print_debug("{}".format(str(costo_acumulado)))
+            print_debug("{}".format(str(nodo)))
+            print_debug("{}".format(str(costo_acumulado), str(nodo)))
+
             if nodo.es_meta():
                 camino = Costo_uniforme.reconstruir_camino(nodo)
                 reporte = Costo_uniforme.generar_reporte(
                     nodos_expandidos, profundidad, tiempo_inicio, nodo)
 
                 return camino, 'Encontré a grogu', reporte
-            
-            if nodo.get_estado in visitados:
-                continue
-            
-            visitados.add(nodo.get_estado)
-            
+
             # Expande el nodo y obtiene sus hijos
             hijos: "list[Nodo]" = nodo.expandir()
 
             # Actualiza cantidad de nodos expandidos
-            nodos_expandidos += 1   
-            
+            nodos_expandidos += 1
+
             for hijo in hijos:
-                print(f"El hijo actual es {hijo}")
+                print_debug(f"El hijo actual es {hijo}")
                 # Actualiza profundidad
                 if profundidad < hijo.get_profundidad():
                     profundidad = hijo.get_profundidad()
@@ -63,17 +63,15 @@ class Costo_uniforme:
                     print_debug("paso, hace un tiempo estuve en {}, evitare entrar en ciclo".format(
                         str(hijo.get_estado())))
                     continue
-                                
-                cola_prioridad.put((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
-                print(hijo.get_costo_acumulado())
-                print(hijo)
-                print((hijo.get_costo_acumulado(), hijo))
-                print(cola_prioridad)
-                # cola_prioridad.sort(reverse=False)
-                # print(f"El contenido de la cola es{cola_prioridad.get()}")
-            
-            # while not cola_prioridad.empty(): print(f"Los nuevos hijos son: {cola_prioridad.get()}")
-            
+
+                # Agrega los hijos a la cola
+                cola_prioridad.put((hijo.get_costo_acumulado(), hijo))
+                print_debug("{}".format(str(hijo.get_costo_acumulado())))
+                print_debug("{}".format(str(hijo)))
+                print_debug("{} {}".format(
+                    str(hijo.get_costo_acumulado()), str(hijo)))
+                print_debug("{}".format(str(cola_prioridad)))
+
         camino = Costo_uniforme.reconstruir_camino(nodo)
         reporte = Costo_uniforme.generar_reporte(
             nodos_expandidos, profundidad, tiempo_inicio, nodo)
@@ -127,7 +125,8 @@ class Costo_uniforme:
     def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio, nodo_act: Nodo):
         tiempo_computo = round(time.time() - tiempo_inicio, 6)
         return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s\nCosto: {}".format(
-            str(nodos_expandidos), str(profundidad), str(tiempo_computo), str(nodo_act.get_costo_acumulado()))                                  
+            str(nodos_expandidos), str(profundidad), str(tiempo_computo), str(nodo_act.get_costo_acumulado()))
+
 
 class Test():
     @staticmethod

@@ -16,13 +16,13 @@ class Costo_uniforme:
         reporte = "Generando..."   
         
         tiempo_inicio = time.time()
-        cola_prioridad = PriorityQueue()
-        cola_prioridad.put((0, Nodo(problema)))
+        cola_prioridad = []
+        cola_prioridad.append((0, Nodo(problema)))
         visitados = set()
         # print(cola_prioridad.get())
         
-        while not cola_prioridad.empty():
-            costo_acumulado, nodo = cola_prioridad.get()  # Saca un nodo de la cola
+        while not len(cola_prioridad) == 0:
+            costo_acumulado, nodo = cola_prioridad.pop(0)  # Saca un nodo de la cola
             print(costo_acumulado)
             print(nodo)       
             print((costo_acumulado, nodo))
@@ -61,7 +61,7 @@ class Costo_uniforme:
                         str(hijo.get_estado())))
                     continue
                                 
-                cola_prioridad.put((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
+                cola_prioridad.append((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
                 print(hijo.get_costo_acumulado())
                 print(hijo)
                 print((hijo.get_costo_acumulado(), hijo))

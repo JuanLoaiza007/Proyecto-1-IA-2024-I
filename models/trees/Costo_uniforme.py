@@ -17,11 +17,15 @@ class Costo_uniforme:
         
         tiempo_inicio = time.time()
         cola_prioridad = PriorityQueue()
-        cola_prioridad.put(Nodo.get_costo_acumulado, Nodo(problema))
+        cola_prioridad.put((0, Nodo(problema)))
         visitados = set()
+        # print(cola_prioridad.get())
         
         while not cola_prioridad.empty():
-            nodo: Nodo = cola_prioridad.get()  # Saca un nodo de la cola
+            costo_acumulado, nodo = cola_prioridad.get()  # Saca un nodo de la cola
+            print(costo_acumulado)
+            print(nodo)       
+            print((costo_acumulado, nodo))
             
             if nodo.es_meta():
                 camino = Costo_uniforme.reconstruir_camino(nodo)
@@ -32,19 +36,16 @@ class Costo_uniforme:
             
             if nodo.get_estado in visitados:
                 continue
-            else:
-                visitados.add(nodo.get_estado)
+            
+            visitados.add(nodo.get_estado)
             
             # Expande el nodo y obtiene sus hijos
             hijos: "list[Nodo]" = nodo.expandir()
 
             # Actualiza cantidad de nodos expandidos
-            nodos_expandidos += 1      
-            
-            cola_prioridad.get()            
+            nodos_expandidos += 1   
             
             for hijo in hijos:
-
                 # Actualiza profundidad
                 if profundidad < hijo.get_profundidad():
                     profundidad = hijo.get_profundidad()
@@ -59,7 +60,12 @@ class Costo_uniforme:
                         str(hijo.get_estado())))
                     continue
                                 
-                cola_prioridad.put(hijo)  # Agrega los hijos a la cola
+                cola_prioridad.put((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
+                print(hijo.get_costo_acumulado())
+                print(hijo)
+            
+                # while not cola_prioridad.empty(): print(f"Los nuevos hijos son: {cola_prioridad.get()}")
+            
         camino = Costo_uniforme.reconstruir_camino(nodo)
         reporte = Costo_uniforme.generar_reporte(
             nodos_expandidos, profundidad, tiempo_inicio, nodo)

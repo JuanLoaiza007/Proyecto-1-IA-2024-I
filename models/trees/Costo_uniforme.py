@@ -46,6 +46,7 @@ class Costo_uniforme:
             nodos_expandidos += 1   
             
             for hijo in hijos:
+                print(f"El hijo actual es {hijo}")
                 # Actualiza profundidad
                 if profundidad < hijo.get_profundidad():
                     profundidad = hijo.get_profundidad()
@@ -63,8 +64,10 @@ class Costo_uniforme:
                 cola_prioridad.put((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
                 print(hijo.get_costo_acumulado())
                 print(hijo)
+                print((hijo.get_costo_acumulado(), hijo))
+                # print(f"El contenido de la cola es{cola_prioridad.get()}")
             
-                # while not cola_prioridad.empty(): print(f"Los nuevos hijos son: {cola_prioridad.get()}")
+            # while not cola_prioridad.empty(): print(f"Los nuevos hijos son: {cola_prioridad.get()}")
             
         camino = Costo_uniforme.reconstruir_camino(nodo)
         reporte = Costo_uniforme.generar_reporte(

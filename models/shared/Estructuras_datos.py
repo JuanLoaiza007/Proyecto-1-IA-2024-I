@@ -261,6 +261,9 @@ class Nodo:
         self.profundidad: int = 0
         self.costo_acumulado: int = 0
 
+    def __lt__(self, other):
+        return self.costo_acumulado < other.costo_acumulado
+
     def __str__(self) -> str:
         padre = None
         if self.padre != None:

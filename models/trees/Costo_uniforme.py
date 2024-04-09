@@ -22,6 +22,7 @@ class Costo_uniforme:
         # print(cola_prioridad.get())
         
         while not len(cola_prioridad) == 0:
+            print(f"La cola de prioridad actual es {cola_prioridad}")
             costo_acumulado, nodo = cola_prioridad.pop(0)  # Saca un nodo de la cola
             print(costo_acumulado)
             print(nodo)       
@@ -65,6 +66,8 @@ class Costo_uniforme:
                 print(hijo.get_costo_acumulado())
                 print(hijo)
                 print((hijo.get_costo_acumulado(), hijo))
+                print(cola_prioridad)
+                cola_prioridad.sort(reverse=False)
                 # print(f"El contenido de la cola es{cola_prioridad.get()}")
             
             # while not cola_prioridad.empty(): print(f"Los nuevos hijos son: {cola_prioridad.get()}")

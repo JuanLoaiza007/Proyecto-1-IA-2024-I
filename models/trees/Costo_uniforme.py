@@ -16,14 +16,16 @@ class Costo_uniforme:
         reporte = "Generando..."   
         
         tiempo_inicio = time.time()
-        cola_prioridad = []
-        cola_prioridad.append((0, Nodo(problema)))
+        # cola_prioridad = []
+        cola_prioridad = PriorityQueue()
+        cola_prioridad.put((0, Nodo(problema)))
         visitados = set()
         # print(cola_prioridad.get())
         
-        while not len(cola_prioridad) == 0:
+        # while not len(cola_prioridad) == 0:
+        while not cola_prioridad.empty():
             print(f"La cola de prioridad actual es {cola_prioridad}")
-            costo_acumulado, nodo = cola_prioridad.pop(0)  # Saca un nodo de la cola
+            costo_acumulado, nodo = cola_prioridad.get()  # Saca un nodo de la cola
             print(costo_acumulado)
             print(nodo)       
             print((costo_acumulado, nodo))
@@ -62,12 +64,12 @@ class Costo_uniforme:
                         str(hijo.get_estado())))
                     continue
                                 
-                cola_prioridad.append((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
+                cola_prioridad.put((hijo.get_costo_acumulado(), hijo))  # Agrega los hijos a la cola
                 print(hijo.get_costo_acumulado())
                 print(hijo)
                 print((hijo.get_costo_acumulado(), hijo))
                 print(cola_prioridad)
-                cola_prioridad.sort(reverse=False)
+                # cola_prioridad.sort(reverse=False)
                 # print(f"El contenido de la cola es{cola_prioridad.get()}")
             
             # while not cola_prioridad.empty(): print(f"Los nuevos hijos son: {cola_prioridad.get()}")

@@ -4,6 +4,7 @@ import os
 from models.trees.Amplitud import *
 from models.trees.Profundidad import *
 from models.trees.Costo_uniforme import *
+from models.trees.A_estrella import *
 from models.shared.Estructuras_datos import Estado
 from models.shared.tools.World_tools import World_tools as wtools
 
@@ -67,6 +68,10 @@ class Modelo_juego:
 
     def iniciar_juego(self):
 
+        if self.algoritmo_actual == "a*":
+            self.camino, self.resultado, self.reporte = A_estrella.busqueda_por_A_estrella(
+                self.problema_inicial)
+            print_debug("He decidido usar el algoritmo A*")
         if self.algoritmo_actual == "profundidad":
             self.camino, self.resultado, self.reporte = Profundidad.busqueda_preferente_por_profundidad(
                 self.problema_inicial)
@@ -74,8 +79,8 @@ class Modelo_juego:
         if self.algoritmo_actual == "costo":
             self.camino, self.resultado, self.reporte = Costo_uniforme.busqueda_por_costo_uniforme(
                 self.problema_inicial)
-            print_debug("He decidido usar el algoritmo profundidad")
-        else:
+            print_debug("He decidido usar el algoritmo costo")
+        if self.algoritmo_actual == "amplitud":
             self.camino, self.resultado, self.reporte = Amplitud.busqueda_preferente_por_amplitud(
                 self.problema_inicial)
             print_debug(

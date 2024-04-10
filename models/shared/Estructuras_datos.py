@@ -307,6 +307,20 @@ class Nodo:
 
     def es_meta(self) -> bool:
         return self.problema.es_estado_objetivo()
+    
+    def calcular_heuristica(self):
+        #Calcula la heurística del nodo actual basada en la distancia de Manhattan dividida por
+        
+        estado_actual = self.get_estado()
+        estado_objetivo = self.problema.get_estado_objetivo()
+
+        # Calcula la distancia de Manhattan
+        distancia_manhattan = abs(estado_actual.x - estado_objetivo.x) + abs(estado_actual.y - estado_objetivo.y)
+
+        # Divide la distancia de Manhattan por 2
+        heuristica = distancia_manhattan / 2
+
+        return heuristica
 
     def expandir(self):
         """

@@ -5,6 +5,7 @@ from models.trees.Amplitud import *
 from models.trees.Profundidad import *
 from models.trees.Costo_uniforme import *
 from models.trees.A_estrella import *
+from models.trees.Avara import *
 from models.shared.Estructuras_datos import Estado
 from models.shared.tools.World_tools import World_tools as wtools
 
@@ -72,6 +73,10 @@ class Modelo_juego:
             self.camino, self.resultado, self.reporte = A_estrella.busqueda_por_A_estrella(
                 self.problema_inicial)
             print_debug("He decidido usar el algoritmo A*")
+        if self.algoritmo_actual == "avara":
+            self.camino, self.resultado, self.reporte = Avara.busqueda_por_avara(
+                self.problema_inicial)
+            print_debug("He decidido usar el algoritmo avara")    
         if self.algoritmo_actual == "profundidad":
             self.camino, self.resultado, self.reporte = Profundidad.busqueda_preferente_por_profundidad(
                 self.problema_inicial)
@@ -83,8 +88,7 @@ class Modelo_juego:
         if self.algoritmo_actual == "amplitud":
             self.camino, self.resultado, self.reporte = Amplitud.busqueda_preferente_por_amplitud(
                 self.problema_inicial)
-            print_debug(
-                "ATENCION: Por DEFAULT he decidido usar el algoritmo amplitud")
+            print_debug("He decidido usar el algoritmo amplitud")
 
         print_debug("Camino es {}\nResultado es {}\n".format(
             str(self.camino), str(self.resultado)))

@@ -2,7 +2,8 @@
 
 from models.shared.tools.File_selector import File_selector
 from models.shared.tools.World_tools import World_tools as wtools
-debug = True
+
+debug = False
 
 
 def print_debug(message):

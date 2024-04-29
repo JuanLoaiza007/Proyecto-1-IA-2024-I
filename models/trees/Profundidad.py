@@ -7,7 +7,7 @@ from models.trees.CommonTreeUtils import CommonTreeUtils as common
 evitar_devolverse = True
 evitar_ciclo = True
 
-debug = True
+debug = False
 
 
 def print_debug(message):

@@ -9,7 +9,7 @@ from models.trees.Avara import *
 from models.shared.Estructuras_datos import Estado
 from models.shared.tools.World_tools import World_tools as wtools
 
-debug = True
+debug = False
 
 
 def print_debug(message):
@@ -76,7 +76,7 @@ class Modelo_juego:
         if self.algoritmo_actual == "avara":
             self.camino, self.resultado, self.reporte = Avara.busqueda_por_avara(
                 self.problema_inicial)
-            print_debug("He decidido usar el algoritmo avara")    
+            print_debug("He decidido usar el algoritmo avara")
         if self.algoritmo_actual == "profundidad":
             self.camino, self.resultado, self.reporte = Profundidad.busqueda_preferente_por_profundidad(
                 self.problema_inicial)

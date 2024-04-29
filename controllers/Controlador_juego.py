@@ -11,7 +11,7 @@ from models.shared.tools.Temporizador import Temporizador
 from models.shared.tools.Dialog import Dialog
 from PyQt5.QtCore import QThread
 
-debug = True
+debug = False
 
 
 def print_debug(message):

@@ -77,9 +77,7 @@ class A_estrella:
                 print_debug("{}".format(str(cola_prioridad)))
 
         camino = common.reconstruir_camino(nodo)
-        nave = common.detectar_nave(nodo)
 
-        print("La nave se halló en {}".format(str(nave)))
         reporte = common.generar_reporte(
             nodos_expandidos, profundidad, tiempo_inicio, nodo)
 

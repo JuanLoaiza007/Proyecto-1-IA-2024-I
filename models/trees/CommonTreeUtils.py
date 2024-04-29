@@ -49,6 +49,15 @@ class CommonTreeUtils:
         return False
 
     @staticmethod
+    def detectar_nave(nodo: Nodo):
+        coordenadas = None
+        while (nodo != None):
+            if (nodo.problema.estado_inicial.en_nave):
+                coordenadas = str(nodo.problema.estado_inicial)
+
+        return coordenadas
+
+    @staticmethod
     def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio, nodo_act: Nodo):
         tiempo_computo = round(time.time() - tiempo_inicio, 6)
         return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s\nCosto: {}".format(

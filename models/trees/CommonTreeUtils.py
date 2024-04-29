@@ -53,12 +53,22 @@ class CommonTreeUtils:
         coordenadas = None
         while (nodo != None):
             if (nodo.problema.estado_inicial.en_nave):
-                coordenadas = str(nodo.problema.estado_inicial)
+                coordenadas = "[{}, {}]".format(str(nodo.problema.estado_inicial.y), str(
+                    nodo.problema.estado_inicial.x))
+            nodo = nodo.padre
 
         return coordenadas
 
     @staticmethod
     def generar_reporte(nodos_expandidos, profundidad, tiempo_inicio, nodo_act: Nodo):
         tiempo_computo = round(time.time() - tiempo_inicio, 6)
-        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s\nCosto: {}".format(
-            str(nodos_expandidos), str(profundidad), str(tiempo_computo), str(nodo_act.get_costo_acumulado()))
+
+        nave = CommonTreeUtils.detectar_nave(nodo_act)
+        reporteNave = "No se ha usado una nave en este recorrido"
+
+        if (nave != None):
+            reporteNave = "Se ha usado una nave en la posicion {}".format(
+                str(nave))
+
+        return "Cantidad de nodos expandidos: {}\nProfundidad del arbol: {}\nTiempo de computo: {} s\nCosto: {}\n{}".format(
+            str(nodos_expandidos), str(profundidad), str(tiempo_computo), str(nodo_act.get_costo_acumulado()), str(reporteNave))
